@@ -2,21 +2,21 @@
 var hide = _.throttle(__(_.c('#menu'), $1, $.hide), 1000, { trailing: false })
 var show = _.throttle(__(_.c('#menu'), $1, $.css({display: "flex"})), 1000, { trailing: false })
 
-// _.go(
-//   $1(window),
-//   $.on('wheel', function(e) {
-//     if (e.deltaY > 0) return hide();
-//     $1('#menu input[type="text"]').focus();
-//     return show();
-//   }),
-//   // $.on('touchstart', function(e) {
-//   //   window.which_y = e.touches[0].clientY;
-//   // }),
-//   // $.on('touchmove', function(e) {
-//   //   if(window.which_y < e.touches[0].clientY) return show()
-//   //   if(window.which_y > e.touches[0].clientY) return hide()
-//   // })
-// );
+_.go(
+  $1(window),
+  $.on('wheel', function(e) {
+    if (e.deltaY > 0) return hide();
+    $1('#menu input[type="text"]').focus();
+    return show();
+  }),
+  $.on('touchstart', function(e) {
+    window.which_y = e.touches[0].clientY;
+  }),
+  $.on('touchmove', function(e) {
+    if(window.which_y < e.touches[0].clientY) return show()
+    if(window.which_y > e.touches[0].clientY) return hide()
+  })
+);
 
 var lo ={};
 lo.f = {};
@@ -156,7 +156,7 @@ _.go(
       $.add_class('on_edit'),
     )
   }),
-  $.on('click', '.content', function(e) {
+  $.on('touchstart', '.content', function(e) {
     var ct = e.$currentTarget;
     if (!$.has_class(ct, 'clicked')) {
       return _go(ct,

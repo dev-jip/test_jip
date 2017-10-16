@@ -201,7 +201,6 @@ _.go(
     return show();
   }),
   $.on('touchstart', function(e) {
-    console.log(e, 'start')
     window.which_y = e.touches[0].clientY;
   }),
   $.on('touchmove', function(e) {
@@ -350,7 +349,6 @@ _.go(
   $.on('click', '.content', function(e) {
     var ct = e.$currentTarget;
     if (!$.has_class(ct, 'clicked')) {
-
       return _go(ct,
         $.add_class('clicked'),
         $.siblings('.content'),
@@ -382,6 +380,18 @@ _.go(
             elem.mozRequestFullScreen();
           } else if (elem.webkitRequestFullscreen) {
             elem.webkitRequestFullscreen();
+          }
+
+          _go(
+            $1('body'),
+            $.append(_.t$(`
+              #loading 
+                div loading...
+            `))
+          )
+
+          $1('video').onloadstart = function(e) {
+            $.remove($('#loading'));
           }
       }),
       $.on('click', 'video', function(e) {

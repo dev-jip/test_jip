@@ -156,14 +156,14 @@ _.go(
   //     $.add_class('on_edit'),
   //   )
   // }),
-  $.on('touchstart', '.content', function(e) {
+  $.on('click', '.content', function(e) {
     var ct = e.$currentTarget;
-    if (!$.has_class(ct, 'clicked')) {
-      return _go(ct,
-        $.add_class('clicked'),
-        $.siblings('.clicked'),
-        $.remove_class('clicked'))
-    }
+    // if (!$.has_class(ct, 'clicked')) {
+    //   return _go(ct,
+    //     $.add_class('clicked'),
+    //     $.siblings('.clicked'),
+    //     $.remove_class('clicked'))
+    // }
     if ($1('#video')) {
       $.remove($1('#video'))
     }
@@ -190,18 +190,17 @@ _.go(
           } else if (elem.webkitRequestFullscreen) {
             elem.webkitRequestFullscreen();
           }
+          _go(
+            $1('body'),
+            $.append(_.t$(`
+              #loading
+                div loading...
+            `))
+          )
 
-          // _go(
-          //   $1('body'),
-          //   $.append(_.t$(`
-          //     #loading
-          //       div loading...
-          //   `))
-          // )
-          //
-          // $1('video').onloadstart = function(e) {
-          //   $.remove($('#loading'));
-          // }
+          $1('video').onloadstart = function(e) {
+            $.remove($('#loading'));
+          }
       }),
       $.on('click', 'video', function(e) {
         e.stopPropagation()

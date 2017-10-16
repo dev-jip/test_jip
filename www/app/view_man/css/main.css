@@ -128,9 +128,6 @@ body a:link {
 #view_man #main .on_edit .spec >div {
   flex-grow: 1;
 }
-#view_man #main .item:hover .edit {
-  display: block;
-}
 #view_man #main .blocking {
   position: absolute;
   top: 0;

@@ -158,12 +158,12 @@ _.go(
   }),
   $.on('touchstart', '.content', function(e) {
     var ct = e.$currentTarget;
-    if (!$.has_class(ct, 'clicked')) {
-      return _go(ct,
-        $.add_class('clicked'),
-        $.siblings('.clicked'),
-        $.remove_class('clicked'))
-    }
+    // if (!$.has_class(ct, 'clicked')) {
+    //   return _go(ct,
+    //     $.add_class('clicked'),
+    //     $.siblings('.clicked'),
+    //     $.remove_class('clicked'))
+    // }
     if ($1('#video')) {
       $.remove($1('#video'))
     }

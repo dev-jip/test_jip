@@ -167,6 +167,15 @@ _.go(
     if ($1('#video')) {
       $.remove($1('#video'))
     }
+
+    _go(
+      $1('body'),
+      $.append(_.t$(`
+        #loading
+          div loading...
+      `))
+    )
+
     _.go(
       ct,
       box.sel,
@@ -183,6 +192,8 @@ _.go(
       $.add_class('selected'),
       _.tap(function(){
         var elem = $1('video');
+
+
           if (elem.requestFullscreen) {
             elem.requestFullscreen();
           } else if (elem.mozRequestFullScreen) {
@@ -190,13 +201,6 @@ _.go(
           } else if (elem.webkitRequestFullscreen) {
             elem.webkitRequestFullscreen();
           }
-          _go(
-            $1('body'),
-            $.append(_.t$(`
-              #loading
-                div loading...
-            `))
-          )
 
           $1('video').onloadstart = function(e) {
             $.remove($('#loading'));

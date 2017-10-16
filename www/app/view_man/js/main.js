@@ -194,13 +194,13 @@ _.go(
         var elem = $1('video');
 
 
-          if (elem.requestFullscreen) {
-            elem.requestFullscreen();
-          } else if (elem.mozRequestFullScreen) {
-            elem.mozRequestFullScreen();
-          } else if (elem.webkitRequestFullscreen) {
-            elem.webkitRequestFullscreen();
-          }
+          // if (elem.requestFullscreen) {
+          //   elem.requestFullscreen();
+          // } else if (elem.mozRequestFullScreen) {
+          //   elem.mozRequestFullScreen();
+          // } else if (elem.webkitRequestFullscreen) {
+          //   elem.webkitRequestFullscreen();
+          // }
 
           $1('video').onloadstart = function(e) {
             $.remove($('#loading'));

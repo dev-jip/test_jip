@@ -117,45 +117,45 @@ _.go(
     )
 
   }),
-  $.on('click', '.edit', function(e) {
-    e.stopPropagation();
-    var ct = e.$currentTarget;
-    var el_content = $.closest(ct, '.content');
-    var box_content = box.sel(el_content);
-    if ($.has_class(el_content, 'on_edit')) {
-      return _.go(
-        el_content,
-        $.find('.edit_option input'),
-        __(
-          function(els){
-            return _.mr(_map(els, $.attr('name')), _map(els, $.val)) },
-          _.object,
-          _(_.set, _, 'hash', function(hash){
-            return JSON.stringify(_.split_s(hash))}),
-          _(_.extend, _, {id: box_content.id})
-        ),
-        _($.post, '/api/files/update'),
-        _(_.extend, box_content),
-        function(file){
-          _go(
-            el_content,
-            $.find('.spec'),
-            _each(function(v){
-              $.text(v, file[$.attr(v, 'name')])
-            })
-          );
-          _go(
-            el_content,
-            $.remove_class('on_edit')
-          );
-        }
-      )
-    }
-    return _go(
-      el_content,
-      $.add_class('on_edit'),
-    )
-  }),
+  // $.on('click', '.edit', function(e) {
+  //   e.stopPropagation();
+  //   var ct = e.$currentTarget;
+  //   var el_content = $.closest(ct, '.content');
+  //   var box_content = box.sel(el_content);
+  //   if ($.has_class(el_content, 'on_edit')) {
+  //     return _.go(
+  //       el_content,
+  //       $.find('.edit_option input'),
+  //       __(
+  //         function(els){
+  //           return _.mr(_map(els, $.attr('name')), _map(els, $.val)) },
+  //         _.object,
+  //         _(_.set, _, 'hash', function(hash){
+  //           return JSON.stringify(_.split_s(hash))}),
+  //         _(_.extend, _, {id: box_content.id})
+  //       ),
+  //       _($.post, '/api/files/update'),
+  //       _(_.extend, box_content),
+  //       function(file){
+  //         _go(
+  //           el_content,
+  //           $.find('.spec'),
+  //           _each(function(v){
+  //             $.text(v, file[$.attr(v, 'name')])
+  //           })
+  //         );
+  //         _go(
+  //           el_content,
+  //           $.remove_class('on_edit')
+  //         );
+  //       }
+  //     )
+  //   }
+  //   return _go(
+  //     el_content,
+  //     $.add_class('on_edit'),
+  //   )
+  // }),
   $.on('touchstart', '.content', function(e) {
     var ct = e.$currentTarget;
     if (!$.has_class(ct, 'clicked')) {

@@ -167,52 +167,52 @@ _.go(
     if ($1('#video')) {
       $.remove($1('#video'))
     }
-    _.go(
-      ct,
-      box.sel,
-      _.t$(`
-        .video#video
-          .body
-            video[autoplay]
-              source[src="{{$.location}}" type="{{$.mimetype}}"]
-              {{_.go($._.subtitles, `, _.if(_.l('$.length'), _.t$(`
-              track[kind="subtitles" srclang="en" label="English" default src="{{$[0].location}}" ]  
-              `)),`)}}
-      `),
-      $.append_to($1('#main')),
-      $.add_class('selected'),
-      _.tap(function(){
-        var elem = $1('video');
-          if (elem.requestFullscreen) {
-            elem.requestFullscreen();
-          } else if (elem.mozRequestFullScreen) {
-            elem.mozRequestFullScreen();
-          } else if (elem.webkitRequestFullscreen) {
-            elem.webkitRequestFullscreen();
-          }
-
-          // _go(
-          //   $1('body'),
-          //   $.append(_.t$(`
-          //     #loading
-          //       div loading...
-          //   `))
-          // )
-          //
-          // $1('video').onloadstart = function(e) {
-          //   $.remove($('#loading'));
-          // }
-      }),
-      $.on('click', 'video', function(e) {
-        e.stopPropagation()
-        var target = e.$currentTarget;
-        var target_parent = $1('#video');
-        return play(target, target_parent)
-      }),
-      $.on('webkitfullscreenchange', 'video', function() {
-        if(!document.webkitFullscreenElement) return $.remove($1('#video'))
-      })
-    )
+    // _.go(
+    //   ct,
+    //   box.sel,
+    //   _.t$(`
+    //     .video#video
+    //       .body
+    //         video[autoplay]
+    //           source[src="{{$.location}}" type="{{$.mimetype}}"]
+    //           {{_.go($._.subtitles, `, _.if(_.l('$.length'), _.t$(`
+    //           track[kind="subtitles" srclang="en" label="English" default src="{{$[0].location}}" ]
+    //           `)),`)}}
+    //   `),
+    //   $.append_to($1('#main')),
+    //   $.add_class('selected'),
+    //   _.tap(function(){
+    //     var elem = $1('video');
+    //       if (elem.requestFullscreen) {
+    //         elem.requestFullscreen();
+    //       } else if (elem.mozRequestFullScreen) {
+    //         elem.mozRequestFullScreen();
+    //       } else if (elem.webkitRequestFullscreen) {
+    //         elem.webkitRequestFullscreen();
+    //       }
+    //
+    //       // _go(
+    //       //   $1('body'),
+    //       //   $.append(_.t$(`
+    //       //     #loading
+    //       //       div loading...
+    //       //   `))
+    //       // )
+    //       //
+    //       // $1('video').onloadstart = function(e) {
+    //       //   $.remove($('#loading'));
+    //       // }
+    //   }),
+    //   $.on('click', 'video', function(e) {
+    //     e.stopPropagation()
+    //     var target = e.$currentTarget;
+    //     var target_parent = $1('#video');
+    //     return play(target, target_parent)
+    //   }),
+    //   $.on('webkitfullscreenchange', 'video', function() {
+    //     if(!document.webkitFullscreenElement) return $.remove($1('#video'))
+    //   })
+    // )
   })
 
 );

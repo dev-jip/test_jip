@@ -87,13 +87,13 @@ _.go(
       )
     }
   }),
-  // $.on('click', '#upload input', function(e) {
-  //   e.stopPropagation();
-  // }),
-  // $.on('click', '#upload', function(e) {
-  //   var ct = e.$currentTarget;
-  //   $.trigger($.find1(ct, 'input'), 'click');
-  // }),
+  $.on('click', '#upload input', function(e) {
+    e.stopPropagation();
+  }),
+  $.on('click', '#upload', function(e) {
+    var ct = e.$currentTarget;
+    $.trigger($.find1(ct, 'input'), 'click');
+  }),
   // $.on('change', '[type="file"]', function(e) {
   //   var data = new FormData();
   //   _.each(e.$currentTarget.files, function(file){

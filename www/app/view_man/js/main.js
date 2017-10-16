@@ -1,22 +1,22 @@
 
-// var hide = _.throttle(__(_.c('#menu'), $1, $.hide), 1000, { trailing: false })
-// var show = _.throttle(__(_.c('#menu'), $1, $.css({display: "flex"})), 1000, { trailing: false })
-//
-// _.go(
-//   $1(window),
-//   $.on('wheel', function(e) {
-//     if (e.deltaY > 0) return hide();
-//     $1('#menu input[type="text"]').focus();
-//     return show();
-//   }),
-//   $.on('touchstart', function(e) {
-//     window.which_y = e.touches[0].clientY;
-//   }),
-//   $.on('touchmove', function(e) {
-//     if(window.which_y < e.touches[0].clientY) return show()
-//     if(window.which_y > e.touches[0].clientY) return hide()
-//   })
-// );
+var hide = _.throttle(__(_.c('#menu'), $1, $.hide), 1000, { trailing: false })
+var show = _.throttle(__(_.c('#menu'), $1, $.css({display: "flex"})), 1000, { trailing: false })
+
+_.go(
+  $1(window),
+  $.on('wheel', function(e) {
+    if (e.deltaY > 0) return hide();
+    $1('#menu input[type="text"]').focus();
+    return show();
+  }),
+  $.on('touchstart', function(e) {
+    window.which_y = e.touches[0].clientY;
+  }),
+  $.on('touchmove', function(e) {
+    if(window.which_y < e.touches[0].clientY) return show()
+    if(window.which_y > e.touches[0].clientY) return hide()
+  })
+);
 
 var lo ={};
 lo.f = {};
@@ -45,78 +45,78 @@ _.go(
 
 _.go(
   $1('#view_man'),
-  $.on('keydown', '#search input', function(e) {
-    if (e.keyCode == 32 || e.keyCode == 13) {
-      $.remove($('.content'));
-
-      var search = _go(
-        _.split_s(e.$currentTarget.value),
-        _.partition(function(v){
-          return /#/.test(v)
-        }),
-        function(p){
-          return { hash : p[0], originalname: _.super_compact(p[1]) }
-        }
-      );
-      if (search.hash.length && search.originalname.length) return;
-
-      if (search.hash.length) return _go(
-          box.sel('files'),
-          _filter(__(
-            _.v('hash'),
-            _find(
-              _(_.contains, search.hash)))),
-          lo.append_files
-        )
-      if (search.originalname.length) return _go(
-        box.sel('files'),
-        _filter(__(
-          _.v('originalname'),
-          function(name) {
-            _find(search.originalname, function(s_name) {
-              var reg = new RegExp(s_name, "i");
-              return reg.test(name);
-            })
-          }
-        )),
-        lo.append_files
-      )
-      return _go(
-        box.sel('files'),
-        lo.append_files
-      )
-    }
-  }),
-  $.on('click', '#upload input', function(e) {
-    e.stopPropagation();
-  }),
-  $.on('click', '#upload', function(e) {
-    var ct = e.$currentTarget;
-    $.trigger($.find1(ct, 'input'), 'click');
-  }),
-  $.on('change', '[type="file"]', function(e) {
-    var data = new FormData();
-    _.each(e.$currentTarget.files, function(file){
-      data.append('files', file);
-    });
-
-    _.go(
-      $.upload(data, {
-        progress: function(a){
-          console.log(a)
-        }
-      }),
-      function(res){
-        _go(
-          res,
-          _.wrap_arr,
-          lo.f
-        )
-
-      }
-    )
-
-  }),
+  // $.on('keydown', '#search input', function(e) {
+  //   if (e.keyCode == 32 || e.keyCode == 13) {
+  //     $.remove($('.content'));
+  //
+  //     var search = _go(
+  //       _.split_s(e.$currentTarget.value),
+  //       _.partition(function(v){
+  //         return /#/.test(v)
+  //       }),
+  //       function(p){
+  //         return { hash : p[0], originalname: _.super_compact(p[1]) }
+  //       }
+  //     );
+  //     if (search.hash.length && search.originalname.length) return;
+  //
+  //     if (search.hash.length) return _go(
+  //         box.sel('files'),
+  //         _filter(__(
+  //           _.v('hash'),
+  //           _find(
+  //             _(_.contains, search.hash)))),
+  //         lo.append_files
+  //       )
+  //     if (search.originalname.length) return _go(
+  //       box.sel('files'),
+  //       _filter(__(
+  //         _.v('originalname'),
+  //         function(name) {
+  //           _find(search.originalname, function(s_name) {
+  //             var reg = new RegExp(s_name, "i");
+  //             return reg.test(name);
+  //           })
+  //         }
+  //       )),
+  //       lo.append_files
+  //     )
+  //     return _go(
+  //       box.sel('files'),
+  //       lo.append_files
+  //     )
+  //   }
+  // }),
+  // $.on('click', '#upload input', function(e) {
+  //   e.stopPropagation();
+  // }),
+  // $.on('click', '#upload', function(e) {
+  //   var ct = e.$currentTarget;
+  //   $.trigger($.find1(ct, 'input'), 'click');
+  // }),
+  // $.on('change', '[type="file"]', function(e) {
+  //   var data = new FormData();
+  //   _.each(e.$currentTarget.files, function(file){
+  //     data.append('files', file);
+  //   });
+  //
+  //   _.go(
+  //     $.upload(data, {
+  //       progress: function(a){
+  //         console.log(a)
+  //       }
+  //     }),
+  //     function(res){
+  //       _go(
+  //         res,
+  //         _.wrap_arr,
+  //         lo.f
+  //       )
+  //
+  //     }
+  //   )
+  //
+  // }),
   // $.on('click', '.edit', function(e) {
   //   e.stopPropagation();
   //   var ct = e.$currentTarget;

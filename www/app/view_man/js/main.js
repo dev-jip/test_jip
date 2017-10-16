@@ -45,48 +45,48 @@ _.go(
 
 _.go(
   $1('#view_man'),
-  // $.on('keydown', '#search input', function(e) {
-  //   if (e.keyCode == 32 || e.keyCode == 13) {
-  //     $.remove($('.content'));
-  //
-  //     var search = _go(
-  //       _.split_s(e.$currentTarget.value),
-  //       _.partition(function(v){
-  //         return /#/.test(v)
-  //       }),
-  //       function(p){
-  //         return { hash : p[0], originalname: _.super_compact(p[1]) }
-  //       }
-  //     );
-  //     if (search.hash.length && search.originalname.length) return;
-  //
-  //     if (search.hash.length) return _go(
-  //         box.sel('files'),
-  //         _filter(__(
-  //           _.v('hash'),
-  //           _find(
-  //             _(_.contains, search.hash)))),
-  //         lo.append_files
-  //       )
-  //     if (search.originalname.length) return _go(
-  //       box.sel('files'),
-  //       _filter(__(
-  //         _.v('originalname'),
-  //         function(name) {
-  //           _find(search.originalname, function(s_name) {
-  //             var reg = new RegExp(s_name, "i");
-  //             return reg.test(name);
-  //           })
-  //         }
-  //       )),
-  //       lo.append_files
-  //     )
-  //     return _go(
-  //       box.sel('files'),
-  //       lo.append_files
-  //     )
-  //   }
-  // }),
+  $.on('keydown', '#search input', function(e) {
+    if (e.keyCode == 32 || e.keyCode == 13) {
+      $.remove($('.content'));
+
+      var search = _go(
+        _.split_s(e.$currentTarget.value),
+        _.partition(function(v){
+          return /#/.test(v)
+        }),
+        function(p){
+          return { hash : p[0], originalname: _.super_compact(p[1]) }
+        }
+      );
+      if (search.hash.length && search.originalname.length) return;
+
+      if (search.hash.length) return _go(
+          box.sel('files'),
+          _filter(__(
+            _.v('hash'),
+            _find(
+              _(_.contains, search.hash)))),
+          lo.append_files
+        )
+      if (search.originalname.length) return _go(
+        box.sel('files'),
+        _filter(__(
+          _.v('originalname'),
+          function(name) {
+            _find(search.originalname, function(s_name) {
+              var reg = new RegExp(s_name, "i");
+              return reg.test(name);
+            })
+          }
+        )),
+        lo.append_files
+      )
+      return _go(
+        box.sel('files'),
+        lo.append_files
+      )
+    }
+  }),
   // $.on('click', '#upload input', function(e) {
   //   e.stopPropagation();
   // }),

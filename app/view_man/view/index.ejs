@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html class="<%= klass %>">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=0,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no" id="viewport">
+    <title><%= title && title + " - " %> view_man</title>
+    <link rel="stylesheet" href="/app/view_man/css/test.css">
+</head>
+<body class="<%= klass %>">
+
+    <div id="view_man">
+        <!--<div class="pages">-->
+            <!--<div id="index" class="don_ui_page page page1">-->
+                <!--<div class="header">-->
+                    <!--<div class="buttons">-->
+                        <!--<button class="on1_1" type="button">page1-1 켜기</button>-->
+                        <!--<button class="on1_2" type="button">page1-2 켜기</button>-->
+                    <!--</div>-->
+                <!--</div>-->
+                <div class="body">
+                    <%- body %>
+                </div>
+                <!--<div id="pages"></div>-->
+            <!--</div>-->
+        <!--</div>-->
+    </div>
+
+<script src="/app/all/js/common/window.functions.js"></script>
+
+<script src="/app/all/js/common/promise.js"></script>
+<script src="/app/all/js/common/fetch.js"></script>
+
+<script src="/share/all/partial.js"></script>
+<script src="/share/all/partial.contrib.js"></script>
+<script src="/share/all/partial.util.js"></script>
+
+<script id="_partial_box_">
+  !function () {
+    window.box = _.box(<%- box %>);
+    var _box = document.getElementById('_partial_box_');
+    _box.parentNode.removeChild(_box);
+  }();
+</script>
+
+<script src="/app/all/js/common/anime.js"></script>
+
+<script src="/app/all/js/common/don.js"></script>
+<script src="/app/all/js/all.js"></script>
+<script src="/app/all/js/common/don.component.js"></script>
+<script src="/app/all/js/common/moment.js"></script>
+<script src="/app/view_man/js/main.js"></script>
+
+</body>
+</html>

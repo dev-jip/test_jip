@@ -139,9 +139,9 @@ body a:link {
 }
 #view_man #main .video {
   position: absolute;
-  width: 600px;
+  width: 100%;
   z-index: 200;
-  transform: translate(50%, 50%);
+  top: 0;
 }
 #view_man #main .video .option .cancel {
   position: absolute;
@@ -154,7 +154,7 @@ body a:link {
   display: none;
 }
 #view_man #main .video video {
-  width: 600px;
+  width: 100%;
   z-index: 200;
 }
 #loading {

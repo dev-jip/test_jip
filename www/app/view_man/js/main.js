@@ -195,7 +195,6 @@ _.go(
       _.tap(function(){
         var elem = $1('video');
 
-
           // if (elem.requestFullscreen) {
           //   elem.requestFullscreen();
           // } else if (elem.mozRequestFullScreen) {
@@ -208,12 +207,12 @@ _.go(
           //   $.remove($('#loading'));
           // }
       }),
-      // $.on('click', 'video', function(e) {
-      //   e.stopPropagation()
-      //   var target = e.$currentTarget;
-      //   var target_parent = $1('#video');
-      //   return play(target, target_parent)
-      // }),
+      $.on('click', 'video', function(e) {
+        e.stopPropagation()
+        var target = e.$currentTarget;
+        var target_parent = $1('#video');
+        return play(target, target_parent)
+      }),
       // $.on('webkitfullscreenchange', 'video', function() {
       //   if(!document.webkitFullscreenElement) return $.remove($1('#video'))
       // })

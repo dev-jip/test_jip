@@ -2,15 +2,6 @@ process.env.TZ = 'Asia/Seoul';
 var express = require('express');
 var app = global.app = express();
 
-//
-// app.use(function (req, res, next) {
-//   res.header("Access-Control-Allow-Methods", "POST, GET, OPTIONS, DELETE");
-//   res.header("Access-Control-Max-Age", "3600");
-//   res.header("Access-Control-Allow-Headers", "x-requested-with");
-//   res.header("Access-Control-Allow-Origin", "*");
-//   next()
-// })
-
 global._ = require('../../www/share/all/partial.js');
 require('../../www/share/all/partial.contrib.js');
 require('../../www/share/all/partial.util.js');

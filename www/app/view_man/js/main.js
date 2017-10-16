@@ -352,7 +352,7 @@ _.go(
           .blocking
           .video
             .body
-              video
+              video[autoplay]
                 source[src="{{$.location}}" type="{{$.mimetype}}"]
                 {{_.go($._.subtitles, `, _.if(_.l('$.length'), _.t$(`
                 track[kind="subtitles" srclang="en" label="English" default src="{{$[0].location}}" ]  
@@ -360,15 +360,25 @@ _.go(
       `),
       $.append_to($1('#main')),
       $.add_class('selected'),
+      _.tap(function(){
+        var elem = $1('video');
+          if (elem.requestFullscreen) {
+            elem.requestFullscreen();
+          } else if (elem.mozRequestFullScreen) {
+            elem.mozRequestFullScreen();
+          } else if (elem.webkitRequestFullscreen) {
+            elem.webkitRequestFullscreen();
+          }
+      }),
       $.on('click', 'video', function(e) {
         e.stopPropagation()
         var target = e.$currentTarget;
         var target_parent = $.closest(target, '.video');
         return play(target, target_parent)
       }),
-      $.on('click', '.blocking', __(
-        $.stop_propagation,
-        $.remove_delegate_target)),
+      // $.on('click', '.blocking', __(
+      //   $.stop_propagation,
+      //   $.remove_delegate_target)),
       $.on('mouseenter', '.video', __(
         _.v('$currentTarget'),
         _.all(

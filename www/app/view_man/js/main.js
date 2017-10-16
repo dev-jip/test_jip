@@ -191,17 +191,17 @@ _.go(
             elem.webkitRequestFullscreen();
           }
 
-          _go(
-            $1('body'),
-            $.append(_.t$(`
-              #loading 
-                div loading...
-            `))
-          )
-
-          $1('video').onloadstart = function(e) {
-            $.remove($('#loading'));
-          }
+          // _go(
+          //   $1('body'),
+          //   $.append(_.t$(`
+          //     #loading
+          //       div loading...
+          //   `))
+          // )
+          //
+          // $1('video').onloadstart = function(e) {
+          //   $.remove($('#loading'));
+          // }
       }),
       $.on('click', 'video', function(e) {
         e.stopPropagation()

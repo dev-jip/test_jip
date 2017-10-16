@@ -156,7 +156,7 @@ _.go(
   //     $.add_class('on_edit'),
   //   )
   // }),
-  $.on('click', '.content', function(e) {
+  $.on('touchstart', '.content', function(e) {
     var ct = e.$currentTarget;
     // if (!$.has_class(ct, 'clicked')) {
     //   return _go(ct,

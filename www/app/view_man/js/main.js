@@ -167,14 +167,16 @@ _.go(
     if ($1('#video')) {
       $.remove($1('#video'))
     }
-
-    _go(
-      $1('body'),
-      $.append(_.t$(`
-        #loading
-          div loading...
-      `))
-    )
+//
+// var a = _.t$('\
+//         #loading\
+//           div loading...\
+//       ')
+//     // console.log(a())
+//     _go(
+//       $1('body'),
+//       $.prepend(a())
+//     )
 
     _.go(
       ct,
@@ -202,19 +204,19 @@ _.go(
           //   elem.webkitRequestFullscreen();
           // }
 
-          $1('video').onloadstart = function(e) {
-            $.remove($('#loading'));
-          }
+          // $1('video').onloadstart = function(e) {
+          //   $.remove($('#loading'));
+          // }
       }),
-      $.on('click', 'video', function(e) {
-        e.stopPropagation()
-        var target = e.$currentTarget;
-        var target_parent = $1('#video');
-        return play(target, target_parent)
-      }),
-      $.on('webkitfullscreenchange', 'video', function() {
-        if(!document.webkitFullscreenElement) return $.remove($1('#video'))
-      })
+      // $.on('click', 'video', function(e) {
+      //   e.stopPropagation()
+      //   var target = e.$currentTarget;
+      //   var target_parent = $1('#video');
+      //   return play(target, target_parent)
+      // }),
+      // $.on('webkitfullscreenchange', 'video', function() {
+      //   if(!document.webkitFullscreenElement) return $.remove($1('#video'))
+      // })
     )
   })
 

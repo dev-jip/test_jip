@@ -354,15 +354,14 @@ _.go(
         $.siblings('.clicked'),
         $.remove_class('clicked'))
     }
-    // if ($.has_class(ct, 'on_edit')) return;
-    if ($1('video')) {
-      $.remove($1('video'))
+    if ($1('#video')) {
+      $.remove($1('#video'))
     }
     _.go(
       ct,
       box.sel,
       _.t$(`
-        .video
+        .video#video
           .body
             video[autoplay]
               source[src="{{$.location}}" type="{{$.mimetype}}"]
@@ -397,38 +396,12 @@ _.go(
       $.on('click', 'video', function(e) {
         e.stopPropagation()
         var target = e.$currentTarget;
-        var target_parent = $.closest(target, '.video');
+        var target_parent = $1('#video');
         return play(target, target_parent)
       }),
       $.on('webkitfullscreenchange', 'video', function() {
-        if(!document.webkitFullscreenElement) return $.remove($1('video'))
-      }),
-      $.on('mouseenter', '.video', __(
-        _.v('$currentTarget'),
-        _.all(
-          __(
-            $.find1('video'),
-            _.l('$.controls = true')
-          ),
-          __(
-            $.find1('.cancel'),
-            $.show
-          )
-        )
-      )),
-      $.on('mouseleave', '.video', __(
-        _.v('$currentTarget'),
-        _.all(
-          __(
-            $.find1('video'),
-            _.l('$.controls = false')
-          ),
-          __(
-            $.find1('.cancel'),
-            $.hide
-          )
-        )
-      ))
+        if(!document.webkitFullscreenElement) return $.remove($1('#video'))
+      })
     )
   })
 
@@ -436,8 +409,8 @@ _.go(
 _.go(
   window,
   $.on('keydown', function(e){
-    var target_parent = $1('.selected')
-    var target = $.find1($1('.selected'), 'video')
+    var target_parent = $1('#video')
+    var target = $.find1($1('#video'), 'video')
     if (target) {
       if (e.keyCode == 32) {
         return play(target, target_parent)

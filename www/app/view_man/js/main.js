@@ -351,12 +351,12 @@ _.go(
     if (!$.has_class(ct, 'clicked')) {
       return _go(ct,
         $.add_class('clicked'),
-        $.siblings('.content'),
+        $.siblings('.clicked'),
         $.remove_class('clicked'))
     }
-    if ($.has_class(ct, 'on_edit')) return;
-    if ($1('.selected')) {
-      $.remove($1('.selected'))
+    // if ($.has_class(ct, 'on_edit')) return;
+    if ($1('video')) {
+      $.remove($1('video'))
     }
     _.go(
       ct,

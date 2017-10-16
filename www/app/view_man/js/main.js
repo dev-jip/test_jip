@@ -168,15 +168,15 @@ _.go(
       $.remove($1('#video'))
     }
 //
-// var a = _.t$('\
-//         #loading\
-//           div loading...\
-//       ')
-//     // console.log(a())
-//     _go(
-//       $1('body'),
-//       $.prepend(a())
-//     )
+var a = _.t$('\
+        #loading\
+          div loading...\
+      ')
+    // console.log(a())
+    _go(
+      $1('body'),
+      $.prepend(a())
+    )
 
     _.go(
       ct,

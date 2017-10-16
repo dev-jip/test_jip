@@ -1,194 +1,3 @@
-// window.is_mobile_size = function() {
-//   return $.width($('html')) < 1025;
-// };
-//
-// !function(){
-//   if (!$1('body.page_test')) return ;
-//   $.page.init({
-//     "p1": {
-//       $parent: $1('#pages'),
-//       // is_modal: !is_mobile_size(),
-//       $switch: [$1('#index > :not(.header)')],
-//       pages: {
-//         "p1_1": {
-//           t: _.t('data', '\
-//           .page.page1_1\
-//             .header\
-//               .buttons\
-//                 button.close[type=button] 닫기\
-//                 button.btn1_1_1[type=button] 1_1_1열기\
-//                 button.btn1_1_2[type=button] 1_1_2열기\
-//             .body\
-//               #inifini_test.mc_is_container[_sel="files"]\
-//             .pages\
-//             .footer')
-//         },
-//         "p1_1_1": {
-//           t: _.t('data', '\
-//           .page.page1_1_1\
-//             .header\
-//               .buttons\
-//                 button.back[type=button] 이전\
-//                 button.close[type=button] 닫기\
-//             .body\
-//               #home_campaign_list.mc_pgn_container[_sel="campaigns"]\
-//                 .mc_pgn_wrap\
-//                 .mc_pagination\
-//             .pages\
-//             .footer')
-//         },
-//         "p1_1_2": {
-//           t: _.t('data', '\
-//           .page.page1_1_2\
-//             .header\
-//               .buttons\
-//                 button.back[type="button"] 이전\
-//                 button.close[type="button"] 닫기\
-//             .body\
-//               .mp_table\
-//                 .thead\
-//                   div 아이디\
-//                   div 이름\
-//                   div 타입\
-//                 .mp_tbody2.mc_is_container[_sel="products2"]\
-//             .pages\
-//             .footer')
-//         }
-//       }
-//     },
-//     'p1_1' : {
-//       $parent: $1('#pages'),
-//       pages: {
-//         "p1_1_1": {
-//           t: _.t('data', '\
-//           .page.page1_1_1\
-//             .header\
-//               .buttons\
-//                 button.back[type=button] 이전\
-//                 button.close[type=button] 닫기\
-//             .body\
-//               #home_campaign_list.mc_pgn_container[_sel="campaigns"]\
-//                 .mc_pgn_wrap\
-//                 .mc_pagination\
-//             .pages\
-//             .footer')
-//         }
-//       }
-//     },
-//     'p1_2' : {
-//       $parent: $1('#pages'),
-//       pages: {
-//         "p1_1_2": {
-//           t: _.t('data', '\
-//           .page.page1_1_2\
-//             .header\
-//               .buttons\
-//                 button.back[type="button"] 이전\
-//                 button.close[type="button"] 닫기\
-//             .body\
-//               .mp_table\
-//                 .thead\
-//                   div 아이디\
-//                   div 이름\
-//                   div 타입\
-//                 .mp_tbody2.mc_is_container[_sel="products2"]\
-//             .pages\
-//             .footer')
-//         }
-//       }
-//     },
-//     'p2': {
-//       $parent: $1('#pages'),
-//       $switch: is_mobile_size() ? [ '#index > .body'] : [],
-//       is_modal: !is_mobile_size(),
-//       pages: {
-//         "p2_1": {
-//           scroll_body: '>.page >.body',
-//           t: _.t('data', '\
-//           .page.page2_1\
-//             .header\
-//               .buttons\
-//                 button.close[type="button"] 닫기\
-//             .body\
-//               .mp_table\
-//                 .thead\
-//                   div 아이디\
-//                   div 이름\
-//                   div 타입\
-//                 .mp_tbody.mc_is_container[_sel="products"]\
-//             .pages\
-//             .footer')
-//         }
-//       }
-//     }
-//   });
-//
-//   function data(data) {
-//     return Promise.resolve(data);
-//   }
-//
-//   _.go($1('body.page_test'),
-//     $.on('click', '.page.page1 > .header .buttons > button.on1_1', function() {
-//       var id= 1;
-//       $.page.go('p1', function() {
-//         return $.page.go('p1', 'p1_1', id, function() {
-//           return id;
-//         });
-//       });
-//     }),
-//     $.on('click', '.page.page1_1 > .header .buttons > button.close', function() {
-//       $.page.hide();
-//     }),
-//     $.on('click', '.page.page1_1 > .header .buttons > button.btn1_1_1', function() {
-//       return $.page.go('p1', 'p1_1_1', 2, function() {
-//         return data({ name: 'p1_1_1입니다!' });
-//       });
-//
-//       $.page.go('p1_1', function() {
-//         return $.page.go('p1_1', 'p1_1_1', 1, function() {
-//           return data({ name: 'p2입니다!' });
-//         });
-//       }, true);
-//     }),
-//
-//     $.on('click', '.page.page1_1 > .header .buttons > button.btn1_1_2', function() {
-//       return $.page.go('p1', 'p1_1_2', 2, function() {
-//         return data({ name: 'p1_1_2입니다!' });
-//       });
-//
-//       $.page.go('p1_2', function() {
-//         return $.page.go('p1_2', 'p1_1_2', 1, function () {
-//           return data({name: 'p2입니다!'});
-//         });
-//       }, true);
-//     }),
-//
-//     $.on('click', '.page1_1_1 > .header .buttons > button.close', function() {
-//       $.page.hide();
-//     }),
-//     $.on('click', '.page1_1_1 > .header .buttons > button.back', function() {
-//       $.page.back();
-//     }),
-//
-//     $.on('click', '.page1_1_2 > .header .buttons > button.close', function() {
-//       $.page.hide();
-//     }),
-//     $.on('click', '.page1_1_2 > .header .buttons > button.back', function() {
-//       $.page.back();
-//     }),
-//
-//     $.on('click', '.page.page1 > .header .buttons > button.on1_2', function() {
-//       return $.page.go('p2', function() {
-//         return $.page.go('p2', 'p2_1', 1, function() {
-//           return data({ name: 'p2입니다!' });
-//         });
-//       });
-//     }),
-//     $.on('click', '.page2_1 >.header .buttons button.close', function() {
-//       $.page.hide();
-//     })
-//   );
-// }();
 
 var hide = _.throttle(__(_.c('#menu'), $1, $.hide), 1000, { trailing: false })
 var show = _.throttle(__(_.c('#menu'), $1, $.css({display: "flex"})), 1000, { trailing: false })
@@ -200,14 +9,13 @@ _.go(
     $1('#menu input[type="text"]').focus();
     return show();
   }),
-  $.on('touchstart', function(e) {
-    window.which_y = e.touches[0].clientY;
-  }),
-  $.on('touchmove', function(e) {
-    // console.log(e.view.screenTop, e.view.screenY, 'move')
-    if(window.which_y < e.touches[0].clientY) return show()
-    if(window.which_y > e.touches[0].clientY) return hide()
-  })
+  // $.on('touchstart', function(e) {
+  //   window.which_y = e.touches[0].clientY;
+  // }),
+  // $.on('touchmove', function(e) {
+  //   if(window.which_y < e.touches[0].clientY) return show()
+  //   if(window.which_y > e.touches[0].clientY) return hide()
+  // })
 );
 
 var lo ={};
@@ -264,10 +72,12 @@ _.go(
         box.sel('files'),
         _filter(__(
           _.v('originalname'),
-          name => _find(search.originalname, function(s_name) {
-            var reg = new RegExp(s_name, "i");
-            return reg.test(name);
-          })
+          function(name) {
+            _find(search.originalname, function(s_name) {
+              var reg = new RegExp(s_name, "i");
+              return reg.test(name);
+            })
+          }
         )),
         lo.append_files
       )
@@ -420,14 +230,6 @@ _.go(
       }
     }
   })
-  // $.on('click', function(e){
-  //   var target = $1('.selected');
-  //   console.log(_.contains(e.path, target));
-  //   if (target && !_.contains(e.path, target)) return _go(
-  //     $1('.selected'),
-  //     $.hide
-  //   )
-  // })
 )
 
 

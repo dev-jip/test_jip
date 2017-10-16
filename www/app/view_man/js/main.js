@@ -201,11 +201,13 @@ _.go(
     return show();
   }),
   $.on('touchstart', function(e) {
-    window.which_page = e.view.pageYOffset
+    console.log(e, 'start')
+    window.which_y = e.touches[0].clientY;
   }),
   $.on('touchmove', function(e) {
-    if(window.which_page < e.view.pageYOffset) return hide()
-    if(window.which_page > e.view.pageYOffset) return show()
+    // console.log(e.view.screenTop, e.view.screenY, 'move')
+    if(window.which_y < e.touches[0].clientY) return show()
+    if(window.which_y > e.touches[0].clientY) return hide()
   })
 );
 

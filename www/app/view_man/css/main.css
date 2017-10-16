@@ -39,7 +39,7 @@ body a:link {
   transform: translateY(100px);
 }
 #view_man #menu {
-  position: absolute;
+  position: fixed;
   width: 100%;
   height: 50px;
   display: none;
@@ -81,6 +81,7 @@ body a:link {
 #view_man #main .content {
   width: 360px;
   position: relative;
+  border: 3px solid transparent;
 }
 #view_man #main .content .option {
   position: absolute;
@@ -91,9 +92,11 @@ body a:link {
 #view_man #main .content .edit {
   display: none;
 }
+#view_man #main .content.clicked {
+  border: 3px solid #db7093;
+}
 #view_man #main .item {
   margin: 10px;
-  background: #ff0;
   display: flex;
 }
 #view_man #main .item .body {

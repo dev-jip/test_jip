@@ -198,10 +198,17 @@ _.go(
   $.on('wheel', function(e) {
     if (e.deltaY > 0) return hide();
     $1('#menu input[type="text"]').focus();
-
     return show();
+  }),
+  $.on('touchstart', function(e) {
+    window.which_page = e.view.pageYOffset
+  }),
+  $.on('touchmove', function(e) {
+    if(window.which_page < e.view.pageYOffset) return hide()
+    if(window.which_page > e.view.pageYOffset) return show()
   })
-)
+);
+
 var lo ={};
 lo.f = {};
 _.go(
@@ -340,6 +347,13 @@ _.go(
   }),
   $.on('click', '.content', function(e) {
     var ct = e.$currentTarget;
+    if (!$.has_class(ct, 'clicked')) {
+
+      return _go(ct,
+        $.add_class('clicked'),
+        $.siblings('.content'),
+        $.remove_class('clicked'))
+    }
     if ($.has_class(ct, 'on_edit')) return;
     if ($1('.selected')) {
       $.remove($1('.selected'))
@@ -348,15 +362,13 @@ _.go(
       ct,
       box.sel,
       _.t$(`
-        .modal
-          .blocking
-          .video
-            .body
-              video[autoplay]
-                source[src="{{$.location}}" type="{{$.mimetype}}"]
-                {{_.go($._.subtitles, `, _.if(_.l('$.length'), _.t$(`
-                track[kind="subtitles" srclang="en" label="English" default src="{{$[0].location}}" ]  
-                `)),`)}}
+        .video
+          .body
+            video[autoplay]
+              source[src="{{$.location}}" type="{{$.mimetype}}"]
+              {{_.go($._.subtitles, `, _.if(_.l('$.length'), _.t$(`
+              track[kind="subtitles" srclang="en" label="English" default src="{{$[0].location}}" ]  
+              `)),`)}}
       `),
       $.append_to($1('#main')),
       $.add_class('selected'),
@@ -376,9 +388,9 @@ _.go(
         var target_parent = $.closest(target, '.video');
         return play(target, target_parent)
       }),
-      // $.on('click', '.blocking', __(
-      //   $.stop_propagation,
-      //   $.remove_delegate_target)),
+      $.on('webkitfullscreenchange', 'video', function() {
+        if(!document.webkitFullscreenElement) return $.remove($1('video'))
+      }),
       $.on('mouseenter', '.video', __(
         _.v('$currentTarget'),
         _.all(
@@ -434,6 +446,7 @@ _.go(
 )
 
 
+
 function play(target, target_parent) {
   if($.has_class(target_parent, 'play')) {
     $.remove_class(target_parent, 'play');
@@ -444,5 +457,3 @@ function play(target, target_parent) {
   target.play()
   return;
 }
-
-

@@ -5,9 +5,10 @@ app.get('/', ___(
         input[type="file" multiple]
       #search
         input[type="text"]
+      #edit
     #main
       .wrapper
-        .contents
+        .contents#contents
   `),
   _.tap(function(){
     this.box = _.box({files: []})

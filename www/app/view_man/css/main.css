@@ -116,18 +116,21 @@ body a:link {
 #view_man #main .item .spec >div {
   flex-grow: 1;
 }
-#view_man #main .on_edit .edit_option {
+#view_man #main .contents.on_edit .edit_option {
   display: flex;
   width: 100%;
 }
-#view_man #main .on_edit .edit_option >input {
+#view_man #main .contents.on_edit .edit_option >input {
   flex-grow: 1;
 }
-#view_man #main .on_edit .spec {
+#view_man #main .contents.on_edit .spec {
   display: none;
 }
-#view_man #main .on_edit .spec >div {
+#view_man #main .contents.on_edit .spec >div {
   flex-grow: 1;
+}
+#view_man #main .contents.on_edit .content:active {
+  border: 3px solid transparent;
 }
 #view_man #main .blocking {
   position: absolute;
@@ -177,4 +180,8 @@ body a:link {
   font-size: 30px;
   font-weight: bolder;
   opacity: 0.5;
+}
+#edit {
+  background: #ff0;
+  flex: 0.1;
 }

@@ -87,7 +87,7 @@ html, body
         display flex
         >div
           flex-grow 1
-    .on_edit
+    .contents.on_edit
       .edit_option
         display flex
         width 100%
@@ -97,7 +97,8 @@ html, body
         display none
         >div
           flex-grow 1
-
+      .content:active
+        border 3px solid transparent
     //.item:hover .edit
     //    display block
     .blocking
@@ -144,3 +145,6 @@ html, body
     font-size 30px
     font-weight bolder
     opacity 0.5
+#edit
+  background yellow
+  flex 0.1

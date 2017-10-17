@@ -47,9 +47,7 @@ LF.loading_and_video = __(
   `),
   $.append_to($1('#main')),
   $.append(LS.loading)
-)
-
-
+);
 
 _.go(
   $.get('/api/file'),
@@ -64,14 +62,42 @@ _.go(
           .body
             .spec
               .originalname.spec[name=originalname] {{file.originalname}}
-              .hash.spec[name=hash] {{file.hash && _.join(file.hash)}}
+              .hash.spec[name=hash] {{file.hash && _go(file.hash, JSON.parse, _.join)}}
             .edit_option
               input[name=originalname type=text value="{{file.originalname}}"]
-              input[name=hash type=text value="{{file.hash && _.join(file.hash)}}"]
+              input[name=hash type=text value="{{file.hash && _go(file.hash, JSON.parse, _.join)}}"]
           .option
             .edit edit
     `)),
-    $.append_to('#main .contents')))
+    $.append_to('#main .contents'))),
+  _.tap(
+    $.find('input'),
+    $.on('blur', function(e) {
+      var ct = e.$currentTarget;
+      var el_content = $.closest(ct, '.content');
+      var box_content = box.sel(el_content);
+      var name = $.attr(ct, 'name');
+      var val1 = ct.value.trim();
+      var val2 = name == "hash" ? _go(
+        val1,
+        _.split_s,
+        _.super_compact, JSON.stringify) : val1;
+      return _.go(
+        { id: box_content.id },
+        _tap(function(file){
+          file[name] = val2;
+          _.extend(box_content, file)
+        }),
+        _($.post, '/api/files/update'),
+        function(){
+          _go(
+            el_content,
+            $.find1('[name=' + name + ']'),
+            $.text(val1)
+          )
+        })
+    })
+  )
 );
 
 _.go(
@@ -79,7 +105,6 @@ _.go(
   $.on('keydown', '#search input', function(e) {
     if (e.keyCode == 32 || e.keyCode == 13) {
       $.remove($('.content'));
-
       var search = _go(
         _.split_s(e.$currentTarget.value),
         _.partition(function(v){
@@ -101,10 +126,14 @@ _.go(
         )
       if (search.originalname.length) return _go(
         box.sel('files'),
+        _.tap(function(a){
+          window.b = a
+          console.log(/마마무/.test(a[0].originalname), a[0])
+        }),
         _filter(__(
           _.v('originalname'),
           function(name) {
-            _find(search.originalname, function(s_name) {
+            return _find(search.originalname, function(s_name) {
               var reg = new RegExp(s_name, "i");
               return reg.test(name);
             })
@@ -118,13 +147,6 @@ _.go(
       )
     }
   }),
-  // $.on('click', '#upload input', function(e) {
-  //   e.stopPropagation();
-  // }),
-  // $.on('click', '#upload', function(e) {
-  //   var ct = e.$currentTarget;
-  //   $.trigger($.find1(ct, 'input'), 'click');
-  // }),
   $.on('change', '[type="file"]', function(e) {
     var data = new FormData();
     _.each(e.$currentTarget.files, function(file){
@@ -202,33 +224,52 @@ _.go(
     )
   })
   )).else(__(
+    $.on('click', '#upload input', function(e) {
+      e.stopPropagation();
+    }),
+    $.on('click', '#upload', function(e) {
+      var ct = e.$currentTarget;
+      $.trigger($.find1(ct, 'input'), 'click');
+    }),
+    $.on('click', '#edit', function(e) {
+      var el_contents = $1('#contents');
+      if (!$.has_class(el_contents, 'on_edit')) return _go(
+        el_contents,
+        $.add_class('on_edit')
+      );
+      _go(
+        el_contents,
+        $.remove_class('on_edit')
+      );
+    }),
     $.on('click', '.content', function(e) {
-    _go(
-      e.$currentTarget,
-      LF.loading_and_video,
-      _.tap(function(){
-        var elem = $1('video');
-          if (elem.requestFullscreen) {
-            elem.requestFullscreen();
-          } else if (elem.mozRequestFullScreen) {
-            elem.mozRequestFullScreen();
-          } else if (elem.webkitRequestFullscreen) {
-            elem.webkitRequestFullscreen();
-          }
-      }),
-      $.on('click', 'video', function(e) {
-        e.stopPropagation();
-        var target = e.$currentTarget;
-        var target_parent = $1('#video');
-        return play(target, target_parent)
-      }),
-      $.on('webkitfullscreenchange', 'video', function() {
-        if(!document.webkitFullscreenElement) return _go(
-          [$1('#video'), $1('#loading')],
-          $.remove
-        )
-      })
-    )
+      if ($.has_class($('#contents'), 'on_edit')) return;
+      _go(
+        e.$currentTarget,
+        LF.loading_and_video,
+        _.tap(function(){
+          var elem = $1('video');
+            if (elem.requestFullscreen) {
+              elem.requestFullscreen();
+            } else if (elem.mozRequestFullScreen) {
+              elem.mozRequestFullScreen();
+            } else if (elem.webkitRequestFullscreen) {
+              elem.webkitRequestFullscreen();
+            }
+        }),
+        $.on('click', 'video', function(e) {
+          e.stopPropagation();
+          var target = e.$currentTarget;
+          var target_parent = $1('#video');
+          return play(target, target_parent)
+        }),
+        $.on('webkitfullscreenchange', 'video', function() {
+          if(!document.webkitFullscreenElement) return _go(
+            [$1('#video'), $1('#loading')],
+            $.remove
+          )
+        })
+      )
   })
   )),
 

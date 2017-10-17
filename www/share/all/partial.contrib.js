@@ -26,6 +26,7 @@ _.debug = function() {
 };
 
 _.join = function(a) {
+console.log(a)
   return a.join(' ');
 }
 
@@ -35,6 +36,6 @@ _.split_s = function(a) {
 
 _.super_compact = function(a) {
   return _.map(_.compact(a), function(v) {
-    return !/^\s+$/.test(v)
+    return !/^\s+$/.test(v) && v
   })
 }

@@ -1,9 +1,9 @@
 
 app.post('/api/file', upload.array('files', 5), function(req, res) {
   _.go(
-    req.files, _.each(_.hi),
+    req.files,
     _.map((v)=>_.pick(v, ['originalname', 'mimetype', 'size', 'location'])),
-    _.map((file) => $$.insert('files', file, '*')), _.hi,
+    _.map((file) => $$.insert('files', file, '*')),
     (files) => res.json(files)
   )
 });

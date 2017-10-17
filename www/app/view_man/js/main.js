@@ -168,15 +168,16 @@ _.go(
       $.remove($1('#video'))
     }
 //
-var a = _.t$('\
-        #loading\
-          div loading...\
-      ')
-    // console.log(a())
-    _go(
-      $1('body'),
-      $.prepend(a())
-    )
+// var a = _.t$('\
+//         #loading\
+//           div loading...\
+//       ')
+//     // console.log(a())
+//     _go(
+//       $1('body'),
+//       $.prepend(a())
+//     );
+    var fullscreen = true;
 
     _.go(
       ct,
@@ -194,7 +195,6 @@ var a = _.t$('\
       $.add_class('selected'),
       _.tap(function(){
         var elem = $1('video');
-
           // if (elem.requestFullscreen) {
           //   elem.requestFullscreen();
           // } else if (elem.mozRequestFullScreen) {
@@ -213,9 +213,10 @@ var a = _.t$('\
         var target_parent = $1('#video');
         return play(target, target_parent)
       }),
-      // $.on('webkitfullscreenchange', 'video', function() {
+      $.on('webkitfullscreenchange', 'video', function() {
+        if (fullscreen) return $.remove($1('#video'))
       //   if(!document.webkitFullscreenElement) return $.remove($1('#video'))
-      // })
+      })
     )
   })
 

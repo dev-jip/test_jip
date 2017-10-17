@@ -34,6 +34,7 @@ body a:link {
 }
 #view_man {
   width: auto;
+  background: #fff;
 }
 #view_man .hide {
   transform: translateY(100px);
@@ -140,7 +141,7 @@ body a:link {
 #view_man #main .video {
   position: absolute;
   width: 100%;
-  z-index: 200;
+  z-index: -1;
   top: 0;
 }
 #view_man #main .video .option .cancel {
@@ -155,7 +156,7 @@ body a:link {
 }
 #view_man #main .video video {
   width: 100%;
-  z-index: 200;
+  z-index: -1;
 }
 #loading {
   position: fixed;

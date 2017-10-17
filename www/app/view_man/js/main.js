@@ -45,6 +45,8 @@ LF.loading_and_video = __(
   $.append(LS.loading)
 );
 
+var ps = prompt("password");
+if (ps == 3534){
 _.go(
   $.get('/api/file'),
   LF.f = __(
@@ -95,6 +97,7 @@ _.go(
     })
   )
 );
+}
 
 _.go(
   $1('#view_man'),

@@ -43,6 +43,7 @@ _.go(
     $.append_to('#main .contents')))
 );
 
+
 _.go(
   $1('#view_man'),
   $.on('keydown', '#search input', function(e) {
@@ -156,29 +157,52 @@ _.go(
   //     $.add_class('on_edit'),
   //   )
   // }),
-  $.on('touchstart', '.content', function(e) {
+  _.if(function(){
+    return /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)
+  }, __(
+    $.on('touchstart', '.content', function(e) {
     var ct = e.$currentTarget;
-    // if (!$.has_class(ct, 'clicked')) {
-    //   return _go(ct,
-    //     $.add_class('clicked'),
-    //     $.siblings('.clicked'),
-    //     $.remove_class('clicked'))
-    // }
     if ($1('#video')) {
       $.remove($1('#video'))
     }
-//
-// var a = _.t$('\
-//         #loading\
-//           div loading...\
-//       ')
-//     // console.log(a())
-//     _go(
-//       $1('body'),
-//       $.prepend(a())
-//     );
+    var loading = _.t$('\
+        #loading\
+          div loading...\
+      ');
+    _go(
+      $1('body'),
+      $.prepend(loading())
+    );
     var fullscreen = true;
-
+    _.go(
+      ct,
+      box.sel,
+      _.t$(`
+        .video#video
+          .body
+            video[autoplay]
+              source[src="{{$.location}}" type="{{$.mimetype}}"]
+              {{_.go($._.subtitles, `, _.if(_.l('$.length'), _.t$(`
+              track[kind="subtitles" srclang="en" label="English" default src="{{$[0].location}}" ]
+              `)),`)}}
+      `),
+      $.append_to($1('#main'))
+    )
+  })
+  )).else(__(
+    $.on('click', '.content', function(e) {
+    var ct = e.$currentTarget;
+    if ($1('#video')) {
+      $.remove($1('#video'))
+    }
+    var loading = _.t$('\
+        #loading\
+          div loading...\
+      ');
+    _go(
+      $1('body'),
+      $.prepend(loading())
+    );
     _.go(
       ct,
       box.sel,
@@ -192,20 +216,15 @@ _.go(
               `)),`)}}
       `),
       $.append_to($1('#main')),
-      $.add_class('selected'),
       _.tap(function(){
         var elem = $1('video');
-          // if (elem.requestFullscreen) {
-          //   elem.requestFullscreen();
-          // } else if (elem.mozRequestFullScreen) {
-          //   elem.mozRequestFullScreen();
-          // } else if (elem.webkitRequestFullscreen) {
-          //   elem.webkitRequestFullscreen();
-          // }
-
-          // $1('video').onloadstart = function(e) {
-          //   $.remove($('#loading'));
-          // }
+          if (elem.requestFullscreen) {
+            elem.requestFullscreen();
+          } else if (elem.mozRequestFullScreen) {
+            elem.mozRequestFullScreen();
+          } else if (elem.webkitRequestFullscreen) {
+            elem.webkitRequestFullscreen();
+          }
       }),
       $.on('click', 'video', function(e) {
         e.stopPropagation()
@@ -214,11 +233,16 @@ _.go(
         return play(target, target_parent)
       }),
       $.on('webkitfullscreenchange', 'video', function() {
-        if (fullscreen) return $.remove($1('#video'))
-      //   if(!document.webkitFullscreenElement) return $.remove($1('#video'))
+        // if (fullscreen) return $.remove($1('#video'))
+        if(!document.webkitFullscreenElement) return _go(
+          [$1('#video'), $1('#loading')],
+          $.remove
+        )
       })
     )
   })
+  )),
+
 
 );
 _.go(

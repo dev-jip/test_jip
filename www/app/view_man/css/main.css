@@ -93,7 +93,7 @@ body a:link {
 #view_man #main .content .edit {
   display: none;
 }
-#view_man #main .content.clicked {
+#view_man #main .content:active {
   border: 3px solid #db7093;
 }
 #view_man #main .item {

@@ -170,17 +170,16 @@ _.go(
     return /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)
   }, __(
     $.on('touchend', '.content', function(e) {
-      console.log(e)
-    //   if( window.for_click ) return _go(
-    //   e.$currentTarget,
-    //   LF.loading_and_video,
-    //   $.on('touchstart', '#loading', function(e) {
-    //     _go(
-    //       [$('#loading'), $1('#video')],
-    //       $.remove
-    //     )
-    //   })
-    // )
+      if( window.for_click ) return _go(
+      e.$currentTarget,
+      LF.loading_and_video,
+      $.on('touchstart', '#loading', function(e) {
+        _go(
+          [$('#loading'), $1('#video')],
+          $.remove
+        )
+      })
+    )
   })
   )).else(__(
     $.on('click', '#upload input', function(e) {

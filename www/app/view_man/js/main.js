@@ -18,15 +18,46 @@ _.go(
   })
 );
 
-var lo ={};
-lo.f = {};
+var LS ={};
+var LF = {};
+
+
+LS.loading = _.t$('\
+    #loading\
+      div loading...\
+  ');
+
+
+LF.loading_and_video = __(
+  // _tap(function(){
+  //   _go(
+  //     $1('body'),
+  //     $.prepend(lo.loading())
+  //   );
+  // }),
+  box.sel,
+  _.t$(`
+    .video#video
+      .body
+        video[autoplay]
+          source[src="{{$.location}}" type="{{$.mimetype}}"]
+          {{_.go($._.subtitles, `, _.if(_.l('$.length'), _.t$(`
+          track[kind="subtitles" srclang="en" label="English" default src="{{$[0].location}}" ]
+          `)),`)}}
+  `),
+  $.append_to($1('#main')),
+  $.append(LS.loading)
+)
+
+
+
 _.go(
   $.get('/api/file'),
-  lo.f = __(
+  LF.f = __(
     _.tap(function(files){
     Array.prototype.push.apply(box.sel('files'), files)
     }),
-    lo.append_files = __(
+    LF.append_files = __(
     _sum(_.t('file', `
       .content[_sel="files->(#{{file.id}})"] 
         .item 
@@ -42,7 +73,6 @@ _.go(
     `)),
     $.append_to('#main .contents')))
 );
-
 
 _.go(
   $1('#view_man'),
@@ -67,7 +97,7 @@ _.go(
             _.v('hash'),
             _find(
               _(_.contains, search.hash)))),
-          lo.append_files
+          LF.append_files
         )
       if (search.originalname.length) return _go(
         box.sel('files'),
@@ -80,11 +110,11 @@ _.go(
             })
           }
         )),
-        lo.append_files
+        LF.append_files
       )
       return _go(
         box.sel('files'),
-        lo.append_files
+        LF.append_files
       )
     }
   }),
@@ -100,7 +130,6 @@ _.go(
     _.each(e.$currentTarget.files, function(file){
       data.append('files', file);
     });
-
     _.go(
       $.upload(data, {
         progress: function(a){
@@ -111,7 +140,7 @@ _.go(
         _go(
           res,
           _.wrap_arr,
-          lo.f
+          LF.f
         )
 
       }
@@ -161,61 +190,22 @@ _.go(
     return /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)
   }, __(
     $.on('touchstart', '.content', function(e) {
-    var ct = e.$currentTarget;
-    if ($1('#video')) {
-      $.remove($1('#video'))
-    }
-    var loading = _.t$('\
-        #loading\
-          div loading...\
-      ');
     _go(
-      $1('body'),
-      $.prepend(loading())
-    );
-    var fullscreen = true;
-    _.go(
-      ct,
-      box.sel,
-      _.t$(`
-        .video#video
-          .body
-            video[autoplay]
-              source[src="{{$.location}}" type="{{$.mimetype}}"]
-              {{_.go($._.subtitles, `, _.if(_.l('$.length'), _.t$(`
-              track[kind="subtitles" srclang="en" label="English" default src="{{$[0].location}}" ]
-              `)),`)}}
-      `),
-      $.append_to($1('#main'))
+      e.$currentTarget,
+      LF.loading_and_video,
+      $.on('touchstart', '#loading', function(e) {
+        _go(
+          [$('#loading'), $1('#video')],
+          $.remove
+        )
+      })
     )
   })
   )).else(__(
     $.on('click', '.content', function(e) {
-    var ct = e.$currentTarget;
-    if ($1('#video')) {
-      $.remove($1('#video'))
-    }
-    var loading = _.t$('\
-        #loading\
-          div loading...\
-      ');
     _go(
-      $1('body'),
-      $.prepend(loading())
-    );
-    _.go(
-      ct,
-      box.sel,
-      _.t$(`
-        .video#video
-          .body
-            video[autoplay]
-              source[src="{{$.location}}" type="{{$.mimetype}}"]
-              {{_.go($._.subtitles, `, _.if(_.l('$.length'), _.t$(`
-              track[kind="subtitles" srclang="en" label="English" default src="{{$[0].location}}" ]
-              `)),`)}}
-      `),
-      $.append_to($1('#main')),
+      e.$currentTarget,
+      LF.loading_and_video,
       _.tap(function(){
         var elem = $1('video');
           if (elem.requestFullscreen) {
@@ -227,13 +217,12 @@ _.go(
           }
       }),
       $.on('click', 'video', function(e) {
-        e.stopPropagation()
+        e.stopPropagation();
         var target = e.$currentTarget;
         var target_parent = $1('#video');
         return play(target, target_parent)
       }),
       $.on('webkitfullscreenchange', 'video', function() {
-        // if (fullscreen) return $.remove($1('#video'))
         if(!document.webkitFullscreenElement) return _go(
           [$1('#video'), $1('#loading')],
           $.remove

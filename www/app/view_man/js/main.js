@@ -13,8 +13,10 @@ _.go(
     window.which_y = e.touches[0].clientY;
   }),
   $.on('touchmove', function(e) {
-    if(window.which_y < e.touches[0].clientY) return show()
-    if(window.which_y > e.touches[0].clientY) return hide()
+    if(window.which_y == e.touches[0].clientY) return window.for_click = true;
+    window.for_click = false;
+    if(window.which_y < e.touches[0].clientY) return show();
+    if(window.which_y > e.touches[0].clientY) return hide();
   })
 );
 
@@ -211,9 +213,10 @@ _.go(
   _.if(function(){
     return /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)
   }, __(
-    $.on('touchstart', '.content', function(e) {
-    _go(
-      e.$currentTarget,
+    $.on('touchend', '.content', function(e) {
+      // console.log(e)
+      if( window.for_click ) return _go(
+      e.$currentTarget, _.hi,
       LF.loading_and_video,
       $.on('touchstart', '#loading', function(e) {
         _go(

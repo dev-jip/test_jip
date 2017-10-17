@@ -45,7 +45,7 @@ body a:link {
   height: 50px;
   display: none;
   transition: transform 1s;
-  z-index: 100;
+  z-index: 5;
   bottom: 0;
 }
 #view_man #upload {

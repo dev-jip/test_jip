@@ -26,7 +26,6 @@ _.debug = function() {
 };
 
 _.join = function(a) {
-console.log(a)
   return a.join(' ');
 }
 

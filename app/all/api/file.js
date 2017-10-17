@@ -24,3 +24,13 @@ app.post('/api/files/update', function(req, res) {
     (file) => res.json(file)
   )
 });
+
+app.post('/ps', function(req, res) {
+  _.go(
+    $.select_one('location', 'files', $.where({ id: 58 }), '*'),
+    function(aa){
+      if (aa.location == req.body.location) return res.send(true)
+      res.send(false)
+    }
+  )
+});

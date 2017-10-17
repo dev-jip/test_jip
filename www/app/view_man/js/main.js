@@ -44,10 +44,14 @@ LF.loading_and_video = __(
   $.append_to($1('#main')),
   $.append(LS.loading)
 );
-
+daechung();
+function daechung(){
 var ps = prompt("password");
-if (ps == 3534){
-_.go(
+return _.go(
+  {location : ps},
+  _($.post, '/ps'),
+  _.if(function(){
+    _.go(
   $.get('/api/file'),
   LF.f = __(
     _.tap(function(files){
@@ -96,6 +100,9 @@ _.go(
         })
     })
   )
+);
+  })
+    .else(daechung)
 );
 }
 

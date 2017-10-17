@@ -161,14 +161,33 @@ _.go(
           _.wrap_arr,
           LF.f
         )
-
       }
     )
-
   }),
   _.if(function(){
     return /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)
   }, __(
+    $.on('touchend', '#upload input', function(e) {
+      e.stopPropagation();
+      if(!window.for_click) return;
+    }),
+    $.on('touchend', '#upload', function(e) {
+      if(!window.for_click) return;
+      var ct = e.$currentTarget;
+      $.trigger($.find1(ct, 'input'), 'click');
+    }),
+    $.on('touchend', '#edit', function(e) {
+      if(!window.for_click) return;
+      var el_contents = $1('#contents');
+      if (!$.has_class(el_contents, 'on_edit')) return _go(
+        el_contents,
+        $.add_class('on_edit')
+      );
+      _go(
+        el_contents,
+        $.remove_class('on_edit')
+      );
+    }),
     $.on('touchend', '.content', function(e) {
       if( window.for_click ) return _go(
       e.$currentTarget,

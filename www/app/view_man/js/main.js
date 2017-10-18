@@ -1,6 +1,9 @@
 
-var hide = _.throttle(__(_.c('#menu'), $1, $.hide), 1000, { trailing: false })
-var show = _.throttle(__(_.c('#menu'), $1, $.css({display: "flex"})), 1000, { trailing: false })
+var LS ={};
+var LF = {};
+
+var hide = _.throttle(LF.menu_hide = __(_.c('#menu'), $1, $.hide), 1000, { trailing: false })
+var show = _.throttle(LF.menu_show = __(_.c('#menu'), $1, $.css({display: "flex"})), 1000, { trailing: false })
 
 _.go(
   $1(window),
@@ -19,9 +22,6 @@ _.go(
     if(window.which_y > e.touches[0].clientY) return hide();
   })
 );
-
-var LS ={};
-var LF = {};
 
 
 LS.loading = _.t$('\
@@ -44,13 +44,75 @@ LF.loading_and_video = __(
   $.append_to($1('#main')),
   $.append(LS.loading)
 );
-daechung();
-function daechung(){
-var ps = prompt("password");
-return _.go(
-  {location : ps},
-  _($.post, '/ps'),
-  _.if(function(){
+//
+// daechung();
+// function daechung(){
+// var ps = prompt("password");
+// return _.go(
+//   {location : ps},
+//   _($.post, '/ps'),
+//   _.if(function(){
+//
+//     _.go(
+//   $.get('/api/file'),
+//   LF.f = __(
+//     _.tap(function(files){
+//     Array.prototype.push.apply(box.sel('files'), files)
+//     }),
+//     LF.append_files = __(
+//     _sum(_.t('file', `
+//       .content[_sel="files->(#{{file.id}})"]
+//         .item
+//           .body
+//             .spec
+//               .originalname.spec[name=originalname] {{file.originalname}}
+//               .hash.spec[name=hash] {{file.hash && _go(file.hash, JSON.parse, _.join)}}
+//             .edit_option
+//               input[name=originalname type=text value="{{file.originalname}}"]
+//               input[name=hash type=text value="{{file.hash && _go(file.hash, JSON.parse, _.join)}}"]
+//           .option
+//             .edit edit
+//     `)),
+//     $.append_to('#main .contents'))),
+//   _.tap(
+//     $.find('input'),
+//     $.on('blur', function(e) {
+//       var ct = e.$currentTarget;
+//       var el_content = $.closest(ct, '.content');
+//       var box_content = box.sel(el_content);
+//       var name = $.attr(ct, 'name');
+//       var val1 = ct.value.trim();
+//       var val2 = name == "hash" ? _go(
+//         val1,
+//         _.split_s,
+//         _.super_compact, JSON.stringify) : val1;
+//       return _.go(
+//         { id: box_content.id },
+//         _tap(function(file){
+//           file[name] = val2;
+//           _.extend(box_content, file)
+//         }),
+//         _($.post, '/api/files/update'),
+//         function(){
+//           _go(
+//             el_content,
+//             $.find1('[name=' + name + ']'),
+//             $.text(val1)
+//           )
+//         })
+//     })
+//   )
+// );
+//
+//   })
+//     .else(daechung)
+// );
+// }
+
+
+
+
+
     _.go(
   $.get('/api/file'),
   LF.f = __(
@@ -101,10 +163,9 @@ return _.go(
     })
   )
 );
-  })
-    .else(daechung)
-);
-}
+
+
+
 
 _.go(
   $1('#view_man'),
@@ -199,6 +260,7 @@ _.go(
       );
     }),
     $.on('touchend', '.content', function(e) {
+      if ($.has_class($('#contents'), 'on_edit')) return;
       if( window.for_click ) return _go(
       e.$currentTarget,
       LF.loading_and_video,
@@ -262,19 +324,33 @@ _.go(
 
 
 );
+
+
 _.go(
   window,
   $.on('keydown', function(e){
     var target_parent = $1('#video')
     var target = $.find1($1('#video'), 'video')
+    var keyCode = e.keyCode;
     if (target) {
-      if (e.keyCode == 32) {
+      if (keyCode == 32) {
         return play(target, target_parent)
       }
-      if (e.keyCode == 27) {
+      if (keyCode == 27) {
         return $.remove(target_parent)
       }
     }
+
+    if (keyCode == 32) {
+      LF.menu_show();
+      $1('#menu input[type="text"]').focus()
+      return;
+    }
+
+    if (keyCode == 27) {
+      LF.menu_hide();
+    }
+
   })
 )
 

@@ -148,10 +148,6 @@ var DragDropTouch;
          */
         function DragDropTouch() {
             this._lastClick = 0;
-            this._jip_which = {x: 0, y:0};
-            this._jip_move = false;
-            this._on_start = false;
-            this._on_end = true;
             this.index = 0;
             // this.move_which = {x: 0, y:0};
             // enforce singleton pattern
@@ -200,23 +196,8 @@ var DragDropTouch;
                 // clear all variables
                 this._reset();
                 // get nearest draggable element
-              // $.text($1('.talk'), $.text($1('.talk')) + ' !!!!' + this.index++ +'~~~ end_before: ' + this._end_before)
-
-              // if(this._end_before) {
-              //     this._end_before = false;
-              //     return;
-              //   }
-              if (!this._on_end) {
-                this._on_end = true
-                return;
-              }
-                // this._on_start = false;
-
                 var src = this._closestDraggable(e.target);
-                // $.text($1('.talk'), $.text($1('.talk')) + ' !!!!' + this.index +' jip_move: ' + this._jip_move)
-                if (src && (!this._jip_move || (Math.abs(e.touches[0].clientX - this._jip_which.x) < 20 && Math.abs(e.touches[0].clientY - this._jip_which.y) < 20))) {
-                    // give caller a chance to handle the hover/move events
-                  this._on_start = true
+                if (src) {
                   if (!this._dispatchEvent(e, 'mousemove', e.target) &&
                         !this._dispatchEvent(e, 'mousedown', e.target)) {
                         // get ready to start dragging
@@ -224,7 +205,6 @@ var DragDropTouch;
                         this._ptDown = this._getPoint(e);
                         this._lastTouch = e;
                         e.preventDefault();
-                        this._createImage(e);
                         // show context menu if the user hasn't started dragging after a while
                         setTimeout(function () {
                             if (_this._dragSource == src && _this._img == null) {
@@ -247,15 +227,12 @@ var DragDropTouch;
                     e.preventDefault();
                     return;
                 }
-                this._jip_move = true;
-                this._jip_which.x = e.touches[0].clientX;
-                this._jip_which.y = e.touches[0].clientY;
                 // start dragging
                 if (this._dragSource && !this._img) {
                     var delta = this._getDelta(e);
                     if (delta > DragDropTouch._THRESHOLD) {
                         this._dispatchEvent(e, 'dragstart', this._dragSource);
-
+                        this._createImage(e);
                         this._dispatchEvent(e, 'dragenter', target);
                     }
                 }
@@ -275,28 +252,6 @@ var DragDropTouch;
         };
         DragDropTouch.prototype._touchend = function (e) {
             if (this._shouldHandle(e)) {
-              // if (this._on_start) {
-              //   this._on_start = false;
-              //   return;
-              // }
-              if (!this._on_start) {
-                this._on_end = false;
-                return;
-              }
-              // $.text($1('.talk'), $.text($1('.talk')) + ' !!!!' + this.index++ +' on_start: ' + this._on_start)
-
-              // if (this._on_start) {
-              //   this._on_start = false;
-              //   this._end_before = false;
-              // } else {
-              //     this._end_before = false;
-              //   }
-              //
-              // }
-              // this._jip_move = false;
-
-
-
 
                 // see if target wants to handle up
                 if (this._dispatchEvent(this._lastTouch, 'mouseup', e.target)) {

@@ -185,3 +185,24 @@ body a:link {
   background: #ff0;
   flex: 0.5;
 }
+#test .wrapper {
+  width: 90%;
+  border: 2px solid #00f;
+  margin: 0 auto;
+  margin-top: 100px;
+  overflow: scroll;
+}
+#test .first_box,
+#test .second_box {
+  border: 2px solid #000;
+  display: flex;
+  justify-content: space-between;
+  width: 1600px;
+}
+#test .first_box > div,
+#test .second_box > div {
+  width: 200px;
+  height: 100px;
+  border: 2px solid #f00;
+  margin: 2px;
+}

@@ -1,4 +1,7 @@
 
+_.go($('#menu'), function(menu){
+if (!menu.length) return;
+
 var LS ={};
 var LF = {};
 
@@ -24,6 +27,8 @@ _.go(
 );
 
 
+
+
 LS.loading = _.t$('\
     #loading\
       div loading...\
@@ -44,76 +49,8 @@ LF.loading_and_video = __(
   $.append_to($1('#main')),
   $.append(LS.loading)
 );
-//
-// daechung();
-// function daechung(){
-// var ps = prompt("password");
-// return _.go(
-//   {location : ps},
-//   _($.post, '/ps'),
-//   _.if(function(){
-//
-//     _.go(
-//   $.get('/api/file'),
-//   LF.f = __(
-//     _.tap(function(files){
-//     Array.prototype.push.apply(box.sel('files'), files)
-//     }),
-//     LF.append_files = __(
-//     _sum(_.t('file', `
-//       .content[_sel="files->(#{{file.id}})"]
-//         .item
-//           .body
-//             .spec
-//               .originalname.spec[name=originalname] {{file.originalname}}
-//               .hash.spec[name=hash] {{file.hash && _go(file.hash, JSON.parse, _.join)}}
-//             .edit_option
-//               input[name=originalname type=text value="{{file.originalname}}"]
-//               input[name=hash type=text value="{{file.hash && _go(file.hash, JSON.parse, _.join)}}"]
-//           .option
-//             .edit edit
-//     `)),
-//     $.append_to('#main .contents'))),
-//   _.tap(
-//     $.find('input'),
-//     $.on('blur', function(e) {
-//       var ct = e.$currentTarget;
-//       var el_content = $.closest(ct, '.content');
-//       var box_content = box.sel(el_content);
-//       var name = $.attr(ct, 'name');
-//       var val1 = ct.value.trim();
-//       var val2 = name == "hash" ? _go(
-//         val1,
-//         _.split_s,
-//         _.super_compact, JSON.stringify) : val1;
-//       return _.go(
-//         { id: box_content.id },
-//         _tap(function(file){
-//           file[name] = val2;
-//           _.extend(box_content, file)
-//         }),
-//         _($.post, '/api/files/update'),
-//         function(){
-//           _go(
-//             el_content,
-//             $.find1('[name=' + name + ']'),
-//             $.text(val1)
-//           )
-//         })
-//     })
-//   )
-// );
-//
-//   })
-//     .else(daechung)
-// );
-// }
 
-
-
-
-
-    _.go(
+_.go(
   $.get('/api/file'),
   LF.f = __(
     _.tap(function(files){
@@ -366,3 +303,4 @@ function play(target, target_parent) {
   target.play()
   return;
 }
+});

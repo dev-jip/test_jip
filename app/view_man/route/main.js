@@ -13,6 +13,55 @@ app.get('/', ___(
   _.tap(function(){
     this.box = _.box({files: []})
   }),
-  _(G.$res_$klass, null, "page_test"),
+  _(G.$res_$klass, null, "view_man"),
   G.$res_$render
 ));
+
+
+
+app.get('/test', ___(
+  _.t$(`
+    #test
+      .wrapper
+        .first_box
+          .product[_id="product_1"]
+            h2 product_1
+          .product[_id="product_2"]
+            h2 product_2
+          .product[_id="product_3"]
+            h2 product_3
+          .product[_id="product_4"]
+            h2 product_4
+          .product[_id="product_5"]
+            h2 product_5
+          .product[_id="product_6"]
+            h2 product_6
+          .product[_id="product_7"]
+            h2 product_7
+          .product[_id="product_8"]
+            h2 product_8
+      .wrapper
+        .second_box
+          .img[_id="img_1" draggable=true]
+            h2 img_1
+          .img[_id="img_2" draggable=true]
+            h2 img_2
+          .img[_id="img_3" draggable=true]
+            h2 img_3
+          .img[_id="img_4" draggable=true]
+            h2 img_4
+          .img[_id="img_5" draggable=true]
+            h2 img_5
+          .img[_id="img_6" draggable=true]
+            h2 img_6
+          .img[_id="img_7" draggable=true]
+            h2 img_7
+          .img[_id="img_8" draggable=true]
+            h2 img_8
+  `),
+  _.tap(function(){
+    this.box = _.box({files: []})
+  }),
+  _(G.$res_$klass, null, "test"),
+  G.$res_$render
+))

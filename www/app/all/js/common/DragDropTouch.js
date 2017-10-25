@@ -215,7 +215,7 @@ var DragDropTouch;
                     }
                 }
             }
-        }, 500);
+        }, 800);
         DragDropTouch.prototype._touchmove = function (e) {
             if (this._shouldHandle(e)) {
                 // see if target wants to handle move

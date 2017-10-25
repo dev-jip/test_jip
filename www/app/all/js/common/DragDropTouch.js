@@ -152,6 +152,7 @@ var DragDropTouch;
             this._jip_move = false;
             this._end_before = false;
             this._on_start = false;
+            this.index = 0;
             // this.move_which = {x: 0, y:0};
             // enforce singleton pattern
             if (DragDropTouch._instance) {
@@ -199,7 +200,7 @@ var DragDropTouch;
                 // clear all variables
                 this._reset();
                 // get nearest draggable element
-              $.text($1('.talk'), $.text($1('.talk')) + ' end_before: ' + this._end_before)
+              $.text($1('.talk'), $.text($1('.talk')) + ' !!!!' + this.index++ +'~~~ end_before: ' + this._end_before)
 
               if(this._end_before) {
                   this._end_before = false;
@@ -208,7 +209,7 @@ var DragDropTouch;
                 this._on_start = true;
 
                 var src = this._closestDraggable(e.target);
-                $.text($1('.talk'), $.text($1('.talk')) + ' jip_move: ' + this._jip_move)
+                $.text($1('.talk'), $.text($1('.talk')) + ' !!!!' + this.index +' jip_move: ' + this._jip_move)
                 if (src && (!this._jip_move || (Math.abs(e.touches[0].clientX - this._jip_which.x) < 20 && Math.abs(e.touches[0].clientY - this._jip_which.y) < 20))) {
                     // give caller a chance to handle the hover/move events
                     if (!this._dispatchEvent(e, 'mousemove', e.target) &&
@@ -269,6 +270,7 @@ var DragDropTouch;
         };
         DragDropTouch.prototype._touchend = function (e) {
             if (this._shouldHandle(e)) {
+$.text($1('.talk'), $.text($1('.talk')) + ' !!!!' + this.index++ +' on_start: ' + this._on_start)
 
               if (this._on_start) {
                 this._on_start = false;

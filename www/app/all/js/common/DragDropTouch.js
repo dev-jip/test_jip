@@ -150,6 +150,7 @@ var DragDropTouch;
             this._lastClick = 0;
             this._jip_which = {x: 0, y:0};
             this._jip_move = false;
+            this._jip_end = false;
             // this.move_which = {x: 0, y:0};
             // enforce singleton pattern
             if (DragDropTouch._instance) {
@@ -197,6 +198,10 @@ var DragDropTouch;
                 // clear all variables
                 this._reset();
                 // get nearest draggable element
+                if(this._jip_end) {
+                  this._jip_end = false;
+                  return;
+                }
                 var src = this._closestDraggable(e.target);
                 if (src && (!this._jip_move || Math.abs(e.touches[0].clientX - this._jip_which.x) < 20 && Math.abs(e.touches[0].clientY - this._jip_which.y) < 20)) {
                     // give caller a chance to handle the hover/move events

@@ -150,7 +150,8 @@ var DragDropTouch;
             this._lastClick = 0;
             this._jip_which = {x: 0, y:0};
             this._jip_move = false;
-            this._jip_end = false;
+            this._end_before = false;
+            this._on_start = false;
             // this.move_which = {x: 0, y:0};
             // enforce singleton pattern
             if (DragDropTouch._instance) {
@@ -198,11 +199,12 @@ var DragDropTouch;
                 // clear all variables
                 this._reset();
                 // get nearest draggable element
-              console.log(this._jip_end)
-                if(this._jip_end) {
-                  this._jip_end = false;
+                if(this._end_before) {
+                  this._end_before = false;
                   return;
                 }
+                this._on_start = true;
+
                 var src = this._closestDraggable(e.target);
                 if (src && (!this._jip_move || Math.abs(e.touches[0].clientX - this._jip_which.x) < 20 && Math.abs(e.touches[0].clientY - this._jip_which.y) < 20)) {
                     // give caller a chance to handle the hover/move events
@@ -264,8 +266,17 @@ var DragDropTouch;
         };
         DragDropTouch.prototype._touchend = function (e) {
             if (this._shouldHandle(e)) {
-              this._jip_move = false;
-              this._jip_end = true;
+
+              if (this._on_start) {
+                this._on_start = false;
+                this._end_before = false;
+              } else {
+                this._end_before = true;
+              }
+
+
+
+
                 // see if target wants to handle up
                 if (this._dispatchEvent(this._lastTouch, 'mouseup', e.target)) {
                     e.preventDefault();

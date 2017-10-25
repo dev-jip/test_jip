@@ -273,6 +273,7 @@ var DragDropTouch;
               } else {
                 this._end_before = true;
               }
+              this._jip_move = false;
 
 
 

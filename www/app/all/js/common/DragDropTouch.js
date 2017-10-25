@@ -148,7 +148,8 @@ var DragDropTouch;
          */
         function DragDropTouch() {
             this._lastClick = 0;
-            this.start_which = {x: 0, y:0};
+            this._jip_which = {x: 0, y:0};
+            this._jip_move = false;
             // this.move_which = {x: 0, y:0};
             // enforce singleton pattern
             if (DragDropTouch._instance) {
@@ -197,7 +198,7 @@ var DragDropTouch;
                 this._reset();
                 // get nearest draggable element
                 var src = this._closestDraggable(e.target);
-                if (src && Math.abs(e.touches[0].clientX - this.start_which.x) < 20 && Math.abs(e.touches[0].clientY - this.start_which.y)) {
+                if (src && (!this._jip_move || Math.abs(e.touches[0].clientX - this._jip_which.x) < 20 && Math.abs(e.touches[0].clientY - this._jip_which.y) < 20)) {
                     // give caller a chance to handle the hover/move events
                     if (!this._dispatchEvent(e, 'mousemove', e.target) &&
                         !this._dispatchEvent(e, 'mousedown', e.target)) {
@@ -221,6 +222,7 @@ var DragDropTouch;
         }, 500);
         DragDropTouch.prototype._touchmove = function (e) {
             if (this._shouldHandle(e)) {
+
                 // see if target wants to handle move
                 var target = this._getTarget(e);
                 if (this._dispatchEvent(e, 'mousemove', target)) {
@@ -228,8 +230,9 @@ var DragDropTouch;
                     e.preventDefault();
                     return;
                 }
-                this.start_which.x = e.touches[0].clientX;
-                this.start_which.y = e.touches[0].clientY;
+                this._jip_move = true;
+                this._jip_which.x = e.touches[0].clientX;
+                this._jip_which.y = e.touches[0].clientY;
                 // start dragging
                 if (this._dragSource && !this._img) {
                     var delta = this._getDelta(e);
@@ -255,6 +258,7 @@ var DragDropTouch;
         };
         DragDropTouch.prototype._touchend = function (e) {
             if (this._shouldHandle(e)) {
+              this._jip_move = false;
                 // see if target wants to handle up
                 if (this._dispatchEvent(this._lastTouch, 'mouseup', e.target)) {
                     e.preventDefault();

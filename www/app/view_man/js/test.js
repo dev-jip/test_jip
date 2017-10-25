@@ -5,7 +5,7 @@ _.go($('#test'), function(test){
     test,
 
     $.on('touchstart', '.img', function(e) {
-
+console.log('aa')
     }),
     $.on('touchmove', '.img', function(e) {
     }),

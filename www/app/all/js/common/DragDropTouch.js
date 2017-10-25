@@ -148,8 +148,6 @@ var DragDropTouch;
          */
         function DragDropTouch() {
             this._lastClick = 0;
-            this.index = 0;
-            // this.move_which = {x: 0, y:0};
             // enforce singleton pattern
             if (DragDropTouch._instance) {
                 throw 'DragDropTouch instance already created.';
@@ -198,7 +196,8 @@ var DragDropTouch;
                 // get nearest draggable element
                 var src = this._closestDraggable(e.target);
                 if (src) {
-                  if (!this._dispatchEvent(e, 'mousemove', e.target) &&
+                    // give caller a chance to handle the hover/move events
+                    if (!this._dispatchEvent(e, 'mousemove', e.target) &&
                         !this._dispatchEvent(e, 'mousedown', e.target)) {
                         // get ready to start dragging
                         this._dragSource = src;
@@ -219,7 +218,6 @@ var DragDropTouch;
         }, 500);
         DragDropTouch.prototype._touchmove = function (e) {
             if (this._shouldHandle(e)) {
-
                 // see if target wants to handle move
                 var target = this._getTarget(e);
                 if (this._dispatchEvent(e, 'mousemove', target)) {
@@ -252,7 +250,6 @@ var DragDropTouch;
         };
         DragDropTouch.prototype._touchend = function (e) {
             if (this._shouldHandle(e)) {
-
                 // see if target wants to handle up
                 if (this._dispatchEvent(this._lastTouch, 'mouseup', e.target)) {
                     e.preventDefault();
@@ -322,7 +319,6 @@ var DragDropTouch;
             this._img = src.cloneNode(true);
             this._copyStyle(src, this._img);
             this._img.style.top = this._img.style.left = '-9999px';
-            this._img.style.borderRadius = "30%"
             // if creating from drag source, apply offset and opacity
             if (!this._imgCustom) {
                 var rc = src.getBoundingClientRect(), pt = this._getPoint(e);

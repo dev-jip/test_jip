@@ -199,14 +199,16 @@ var DragDropTouch;
                 // clear all variables
                 this._reset();
                 // get nearest draggable element
-                if(this._end_before) {
+              $.text($1('.talk'), $.text($1('.talk')) + ' end_before: ' + this._end_before)
+
+              if(this._end_before) {
                   this._end_before = false;
                   return;
                 }
                 this._on_start = true;
 
                 var src = this._closestDraggable(e.target);
-                $.text($1('.talk'), $.text($1('.talk')) + ' ' + this._jip_move)
+                $.text($1('.talk'), $.text($1('.talk')) + ' jip_move: ' + this._jip_move)
                 if (src && (!this._jip_move || (Math.abs(e.touches[0].clientX - this._jip_which.x) < 20 && Math.abs(e.touches[0].clientY - this._jip_which.y) < 20))) {
                     // give caller a chance to handle the hover/move events
                     if (!this._dispatchEvent(e, 'mousemove', e.target) &&

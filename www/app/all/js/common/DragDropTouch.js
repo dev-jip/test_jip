@@ -148,7 +148,8 @@ var DragDropTouch;
          */
         function DragDropTouch() {
             this._lastClick = 0;
-            this._jip_move = true;
+            this.start_which = {x: 0, y:0};
+            // this.move_which = {x: 0, y:0};
             // enforce singleton pattern
             if (DragDropTouch._instance) {
                 throw 'DragDropTouch instance already created.';
@@ -196,7 +197,7 @@ var DragDropTouch;
                 this._reset();
                 // get nearest draggable element
                 var src = this._closestDraggable(e.target);
-                if (src) {
+                if (src && Math.abs(e.touches[0].clientX - this.start_which.x) < 20 && Math.abs(e.touches[0].clientY - this.start_which.y)) {
                     // give caller a chance to handle the hover/move events
                     if (!this._dispatchEvent(e, 'mousemove', e.target) &&
                         !this._dispatchEvent(e, 'mousedown', e.target)) {
@@ -216,7 +217,7 @@ var DragDropTouch;
                     }
                 }
             }
-        },500);
+        }, 500);
         DragDropTouch.prototype._touchmove = function (e) {
             if (this._shouldHandle(e)) {
                 // see if target wants to handle move
@@ -226,6 +227,8 @@ var DragDropTouch;
                     e.preventDefault();
                     return;
                 }
+                this.start_which.x = e.touches[0].clientX;
+                this.start_which.y = e.touches[0].clientY;
                 // start dragging
                 if (this._dragSource && !this._img) {
                     var delta = this._getDelta(e);
@@ -234,12 +237,6 @@ var DragDropTouch;
                         this._createImage(e);
                         this._dispatchEvent(e, 'dragenter', target);
                     }
-                }
-
-                if(this._jip_move && this._closestDraggable(e.target)){
-                  this._jip_move = false;
-                  var rc = this._closestDraggable(e.target).getBoundingClientRect(), pt = this._getPoint(e);
-                  this._imgOffset = { x: pt.x - rc.left, y: pt.y - rc.top };
                 }
                 // continue dragging
                 if (this._img) {
@@ -257,7 +254,6 @@ var DragDropTouch;
         };
         DragDropTouch.prototype._touchend = function (e) {
             if (this._shouldHandle(e)) {
-                this._jip_move = true;
                 // see if target wants to handle up
                 if (this._dispatchEvent(this._lastTouch, 'mouseup', e.target)) {
                     e.preventDefault();

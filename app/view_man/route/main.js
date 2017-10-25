@@ -17,11 +17,10 @@ app.get('/', ___(
   G.$res_$render
 ));
 
-
-
 app.get('/test', ___(
   _.t$(`
     #test
+      .talk
       .wrapper
         .first_box
           .product[_id="product_1"]

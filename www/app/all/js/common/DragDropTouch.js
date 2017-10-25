@@ -276,7 +276,12 @@ $.text($1('.talk'), $.text($1('.talk')) + ' !!!!' + this.index++ +' on_start: ' 
                 this._on_start = false;
                 this._end_before = false;
               } else {
-                this._end_before = true;
+                if(this._end_before) {
+                  this._end_before = false;
+                } else {
+                  this._end_before = true;
+                }
+
               }
               this._jip_move = false;
 

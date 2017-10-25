@@ -206,7 +206,7 @@ var DragDropTouch;
                 this._on_start = true;
 
                 var src = this._closestDraggable(e.target);
-                if (src && (!this._jip_move || Math.abs(e.touches[0].clientX - this._jip_which.x) < 20 && Math.abs(e.touches[0].clientY - this._jip_which.y) < 20)) {
+                if (src && (!this._jip_move || (Math.abs(e.touches[0].clientX - this._jip_which.x) < 20 && Math.abs(e.touches[0].clientY - this._jip_which.y) < 20))) {
                     // give caller a chance to handle the hover/move events
                     if (!this._dispatchEvent(e, 'mousemove', e.target) &&
                         !this._dispatchEvent(e, 'mousedown', e.target)) {

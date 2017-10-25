@@ -148,6 +148,7 @@ var DragDropTouch;
          */
         function DragDropTouch() {
             this._lastClick = 0;
+            this._jip_move = true;
             // enforce singleton pattern
             if (DragDropTouch._instance) {
                 throw 'DragDropTouch instance already created.';
@@ -234,6 +235,12 @@ var DragDropTouch;
                         this._dispatchEvent(e, 'dragenter', target);
                     }
                 }
+
+                if(this._jip_move && this._closestDraggable(e.target)){
+                  this._jip_move = false;
+                  var rc = this._closestDraggable(e.target).getBoundingClientRect(), pt = this._getPoint(e);
+                  this._imgOffset = { x: pt.x - rc.left, y: pt.y - rc.top };
+                }
                 // continue dragging
                 if (this._img) {
                     this._lastTouch = e;
@@ -250,6 +257,7 @@ var DragDropTouch;
         };
         DragDropTouch.prototype._touchend = function (e) {
             if (this._shouldHandle(e)) {
+                this._jip_move = true;
                 // see if target wants to handle up
                 if (this._dispatchEvent(this._lastTouch, 'mouseup', e.target)) {
                     e.preventDefault();

@@ -41,21 +41,21 @@ app.get('/test', ___(
             h2 product_8
       .wrapper
         .second_box
-          .img[_id="img_1" draggable=false]
+          .img[_id="img_1" draggable=true]
             h2 img_1
-          .img[_id="img_2" draggable=false]
+          .img[_id="img_2" draggable=true]
             h2 img_2
-          .img[_id="img_3" draggable=false]
+          .img[_id="img_3" draggable=true]
             h2 img_3
-          .img[_id="img_4" draggable=false]
+          .img[_id="img_4" draggable=true]
             h2 img_4
-          .img[_id="img_5" draggable=false]
+          .img[_id="img_5" draggable=true]
             h2 img_5
-          .img[_id="img_6" draggable=false]
+          .img[_id="img_6" draggable=true]
             h2 img_6
-          .img[_id="img_7" draggable=false]
+          .img[_id="img_7" draggable=true]
             h2 img_7
-          .img[_id="img_8" draggable=false]
+          .img[_id="img_8" draggable=true]
             h2 img_8
   `),
   _.tap(function(){

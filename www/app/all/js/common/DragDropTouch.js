@@ -206,6 +206,7 @@ var DragDropTouch;
                         this._ptDown = this._getPoint(e);
                         this._lastTouch = e;
                         e.preventDefault();
+                        this._createImage(e);
                         // show context menu if the user hasn't started dragging after a while
                         setTimeout(function () {
                             if (_this._dragSource == src && _this._img == null) {
@@ -234,7 +235,7 @@ var DragDropTouch;
                     var delta = this._getDelta(e);
                     if (delta > DragDropTouch._THRESHOLD) {
                         this._dispatchEvent(e, 'dragstart', this._dragSource);
-                        this._createImage(e);
+
                         this._dispatchEvent(e, 'dragenter', target);
                     }
                 }
@@ -323,6 +324,7 @@ var DragDropTouch;
             this._img = src.cloneNode(true);
             this._copyStyle(src, this._img);
             this._img.style.top = this._img.style.left = '-9999px';
+            this._img.style.borderRadius = "30%"
             // if creating from drag source, apply offset and opacity
             if (!this._imgCustom) {
                 var rc = src.getBoundingClientRect(), pt = this._getPoint(e);

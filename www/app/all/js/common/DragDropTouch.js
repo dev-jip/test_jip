@@ -150,7 +150,7 @@ var DragDropTouch;
             this._lastClick = 0;
             this._jip_which = {x: 0, y:0};
             this._jip_move = false;
-            this._on_start = true;
+            this._on_start = false;
             this._on_end = true;
             this.index = 0;
             // this.move_which = {x: 0, y:0};
@@ -216,7 +216,8 @@ var DragDropTouch;
                 // $.text($1('.talk'), $.text($1('.talk')) + ' !!!!' + this.index +' jip_move: ' + this._jip_move)
                 if (src && (!this._jip_move || (Math.abs(e.touches[0].clientX - this._jip_which.x) < 20 && Math.abs(e.touches[0].clientY - this._jip_which.y) < 20))) {
                     // give caller a chance to handle the hover/move events
-                    if (!this._dispatchEvent(e, 'mousemove', e.target) &&
+                  this._on_start = true
+                  if (!this._dispatchEvent(e, 'mousemove', e.target) &&
                         !this._dispatchEvent(e, 'mousedown', e.target)) {
                         // get ready to start dragging
                         this._dragSource = src;
@@ -278,8 +279,10 @@ var DragDropTouch;
               //   this._on_start = false;
               //   return;
               // }
-              console.log('aa')
-              this._on_end = false
+              if (!this._on_start) {
+                this._on_end = false;
+                return;
+              }
               // $.text($1('.talk'), $.text($1('.talk')) + ' !!!!' + this.index++ +' on_start: ' + this._on_start)
 
               // if (this._on_start) {

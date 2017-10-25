@@ -194,8 +194,45 @@ var DragDropTouch;
         // clear all variables
         this._reset();
         // get nearest draggable element
-        var src = this._closestDraggable(e.target);
-        if (src) {
+        // var src = this._closestDraggable(e.target);
+        //
+        // if (src) {
+        //   // give caller a chance to handle the hover/move events
+        //   if (!this._dispatchEvent(e, 'mousemove', e.target) &&
+        //     !this._dispatchEvent(e, 'mousedown', e.target)) {
+        //     // get ready to start dragging
+        //     this._dragSource = src;
+        //     this._ptDown = this._getPoint(e);
+        //     this._lastTouch = e;
+        //     e.preventDefault();
+        //     // show context menu if the user hasn't started dragging after a while
+        //
+        //     // setTimeout(function () {
+        //     //   console.log('aa')
+        //     //   if (_this._dragSource == src && _this._img == null) {
+        //     //   console.log('bb')
+        //     //
+        //     //     if (_this._dispatchEvent(e, 'contextmenu', src)) {
+        //     //     console.log('cc')
+        //     //
+        //     //       _this._reset();
+        //     //     }
+        //     //   }
+        //     // }, DragDropTouch._CTXMENU);
+        //
+        //   }
+        // }
+window.b = true
+        window.which_x = e.touches[0].clientX;
+        window.which_y = e.touches[0].clientY;
+      }
+    };
+    DragDropTouch.prototype._touchmove = function (e) {
+
+        if (window.b && window.which_y != e.touches[0].clientY && window.which_x == e.touches[0].clientX) {
+          window.b = false
+          var src = this._closestDraggable(e.target);
+
           // give caller a chance to handle the hover/move events
           if (!this._dispatchEvent(e, 'mousemove', e.target) &&
             !this._dispatchEvent(e, 'mousedown', e.target)) {
@@ -205,18 +242,23 @@ var DragDropTouch;
             this._lastTouch = e;
             e.preventDefault();
             // show context menu if the user hasn't started dragging after a while
-            setTimeout(function () {
-              if (_this._dragSource == src && _this._img == null) {
-                if (_this._dispatchEvent(e, 'contextmenu', src)) {
-                  _this._reset();
-                }
-              }
-            }, DragDropTouch._CTXMENU);
+return;
+            // setTimeout(function () {
+            //   console.log('aa')
+            //   if (_this._dragSource == src && _this._img == null) {
+            //   console.log('bb')
+            //
+            //     if (_this._dispatchEvent(e, 'contextmenu', src)) {
+            //     console.log('cc')
+            //
+            //       _this._reset();
+            //     }
+            //   }
+            // }, DragDropTouch._CTXMENU);
+
           }
         }
-      }
-    };
-    DragDropTouch.prototype._touchmove = function (e) {
+
       if (this._shouldHandle(e)) {
         // see if target wants to handle move
         var target = this._getTarget(e);

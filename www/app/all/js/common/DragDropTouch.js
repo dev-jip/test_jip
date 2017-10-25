@@ -198,6 +198,7 @@ var DragDropTouch;
                 // clear all variables
                 this._reset();
                 // get nearest draggable element
+              console.log(this._jip_end)
                 if(this._jip_end) {
                   this._jip_end = false;
                   return;
@@ -264,6 +265,7 @@ var DragDropTouch;
         DragDropTouch.prototype._touchend = function (e) {
             if (this._shouldHandle(e)) {
               this._jip_move = false;
+              this._jip_end = true;
                 // see if target wants to handle up
                 if (this._dispatchEvent(this._lastTouch, 'mouseup', e.target)) {
                     e.preventDefault();
